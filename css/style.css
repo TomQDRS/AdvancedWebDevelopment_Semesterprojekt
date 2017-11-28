@@ -1,0 +1,84 @@
+*{
+	background-color:#3d3d3d;
+	color:white;
+}
+
+body{
+	margin: 0px;
+}
+
+nav{
+	/* styling the navigation bar */
+	background-color:#2b2b2b;
+	border-bottom-color:black;
+	border-bottom-style:solid;
+	border-bottom-width:1px;
+	height: 48px;
+	/* fixing the navigation bar at the top */
+	position: fixed;
+	top: 0;
+	width: 100%;
+	/* positioning children in bar */
+}
+
+.nav_button{
+	height: 36px;
+	width: 36px;
+	position: absolute;
+	top: 50%;
+	margin-top: -18px;
+	border-style: none;
+	border-radius: 6px;
+}
+
+#upload_nav_button{
+	background-image: url(../icons/ic_upload_36.png);
+	/* src: https://material.io/icons/#ic_file_upload (accessed: 28.11.2017 23:12) */
+	background-repeat: no-repeat;
+	background-position: center center;
+	left: 12px;
+}
+
+#search_nav_button{
+	background-image: url(../icons/ic_search_36.png);
+	/* src: https://material.io/icons/#ic_search (accessed: 28.11.2017 23:13) */
+	background-repeat: no-repeat;
+	background-position: center center;
+	left: 60px;
+}
+
+#login_nav_button{
+	background-image: url(../icons/ic_login_36.png);
+	/* src: https://material.io/icons/#ic_person (accessed: 28.11.2017 23:13) */
+	background-repeat: no-repeat;	
+	background-position: center center;
+	right: 12px;
+}
+
+#logo_nav_img{
+	background-color: transparent;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-top: -18px;
+	margin-left: -64px;
+}
+
+footer{
+	/* styling the footer */
+	background-color:#2b2b2b;
+	border-top-color:black;
+	border-top-style:solid;
+	border-top-width:1px;
+	height: 45px;
+	/* fixing the header at the bottom */
+	bottom: 0;
+	width: 100%;
+	position: fixed;
+}
+
+#main{
+	margin-top: 48px;
+	margin-bottom: 45px;
+}
+

@@ -1,6 +1,7 @@
 *{
 	background-color:#3d3d3d;
 	color:white;
+    font-family: sans-serif;
 }
 
 body{
@@ -75,6 +76,14 @@ footer{
 	bottom: 0;
 	width: 100%;
 	position: fixed;
+    /* designing elements in the bottom */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer_link{
+    background-color: transparent;
 }
 
 #main{
@@ -82,3 +91,11 @@ footer{
 	margin-bottom: 45px;
 }
 
+.minibar{
+    padding: 4px;
+    font-size: 14px;
+}
+
+.uploaded_image{
+    width: 25%;
+}

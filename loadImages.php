@@ -11,7 +11,7 @@
         {        
             $ext = pathinfo($file, PATHINFO_EXTENSION);
 
-            if($ext == 'jpg' || $ext == 'png' || $ext == 'gif')
+            if($ext == 'jpg' || $ext == 'png' || $ext == "PNG" || $ext == 'gif')
             {
                 $imageFiles[] = $file;
             }
@@ -20,7 +20,10 @@
 
     foreach ($imageFiles as $image)
     {
+        echo '<div class = "imagefield">';
         echo '<img class="uploaded_image" src="uploaded_images/'.$image.'"/>';
+        echo '<div>'.$image.'</div>';
+        echo '</div>';
     }
 
 ?>

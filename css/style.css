@@ -1,101 +1,168 @@
-*{
-	background-color:#3d3d3d;
-	color:white;
+* {
+    background-color: #3d3d3d;
+    color: white;
     font-family: sans-serif;
 }
 
-body{
-	margin: 0px;
+body {
+    margin: 0px;
 }
 
-nav{
-	/* styling the navigation bar */
-	background-color:#2b2b2b;
-	border-bottom-color:black;
-	border-bottom-style:solid;
-	border-bottom-width:1px;
-	height: 48px;
-	/* fixing the navigation bar at the top */
-	position: fixed;
-	top: 0;
-	width: 100%;
-	/* positioning children in bar */
+nav {
+    /* styling the navigation bar */
+    background-color: #2b2b2b;
+    border-bottom-color: black;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    height: 48px;
+    /* fixing the navigation bar at the top */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    /* positioning children in bar */
 }
 
-.nav_button{
-	height: 36px;
-	width: 36px;
-	position: absolute;
-	top: 50%;
-	margin-top: -18px;
-	border-style: none;
-	border-radius: 6px;
+.nav_button {
+    height: 36px;
+    width: 36px;
+    position: absolute;
+    top: 50%;
+    margin-top: -18px;
+    border-style: none;
+    border-radius: 6px;
 }
 
-#upload_nav_button{
-	background-image: url(../icons/ic_upload_36.png);
-	/* src: https://material.io/icons/#ic_file_upload (accessed: 28.11.2017 23:12) */
-	background-repeat: no-repeat;
-	background-position: center center;
-	left: 12px;
+#upload_nav_button {
+    background-image: url(../icons/ic_upload_36.png);
+    /* src: https://material.io/icons/#ic_file_upload (accessed: 28.11.2017 23:12) */
+    background-repeat: no-repeat;
+    background-position: center center;
+    left: 12px;
 }
 
-#search_nav_button{
-	background-image: url(../icons/ic_search_36.png);
-	/* src: https://material.io/icons/#ic_search (accessed: 28.11.2017 23:13) */
-	background-repeat: no-repeat;
-	background-position: center center;
-	left: 60px;
+#search_nav_button {
+    background-image: url(../icons/ic_search_36.png);
+    /* src: https://material.io/icons/#ic_search (accessed: 28.11.2017 23:13) */
+    background-repeat: no-repeat;
+    background-position: center center;
+    left: 60px;
 }
 
-#login_nav_button{
-	background-image: url(../icons/ic_login_36.png);
-	/* src: https://material.io/icons/#ic_person (accessed: 28.11.2017 23:13) */
-	background-repeat: no-repeat;	
-	background-position: center center;
-	right: 12px;
+#login_nav_button {
+    background-image: url(../icons/ic_login_36.png);
+    /* src: https://material.io/icons/#ic_person (accessed: 28.11.2017 23:13) */
+    background-repeat: no-repeat;
+    background-position: center center;
+    right: 12px;
 }
 
-#logo_nav_img{
-	background-color: transparent;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-top: -18px;
-	margin-left: -64px;
+
+#logo_nav_img {
+    background-color: transparent;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -18px;
+    margin-left: -64px;
 }
 
-footer{
-	/* styling the footer */
-	background-color:#2b2b2b;
-	border-top-color:black;
-	border-top-style:solid;
-	border-top-width:1px;
-	height: 45px;
-	/* fixing the header at the bottom */
-	bottom: 0;
-	width: 100%;
-	position: fixed;
+
+footer {
+    /* styling the footer */
+    background-color: #2b2b2b;
+    border-top-color: black;
+    border-top-style: solid;
+    border-top-width: 1px;
+    height: 45px;
+    /* fixing the header at the bottom */
+    bottom: 0;
+    width: 100%;
+    position: fixed;
     /* designing elements in the bottom */
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.footer_link{
+.footer_link {
     background-color: transparent;
 }
 
-#main{
-	margin-top: 48px;
-	margin-bottom: 45px;
+#main {
+    margin-top: 48px;
+    margin-bottom: 45px;
 }
 
-.minibar{
+.minibar {
     padding: 4px;
     font-size: 14px;
 }
 
-.uploaded_image{
-    width: 25%;
+#imagecontainer {
+    display: flex;
+    padding: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#imagecontainer:after {
+    content: "";
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
+
+/* using media rules to resize uploaded images depending on screen size */
+
+@media only screen and (min-width: 0px) {
+    .imagefield {
+        width: 98%;
+        min-height: 250px;
+        max-height: 250px;
+        float: left;
+    }
+}
+
+@media only screen and (min-width: 364px) {
+    .imagefield {
+        width: 48%;
+        min-height: 250px;
+        max-height: 250px;
+        float: left;
+    }
+}
+
+@media only screen and (min-width: 650px) {
+    .imagefield {
+        width: 24%;
+        min-height: 250px;
+        max-height: 250px;
+        float: left;
+    }
+}
+
+@media only screen and (min-width: 860px) {
+    .imagefield {
+        width: 16%;
+        min-width: 60px;
+        min-height: 300px;
+        float: left;
+    }
+}
+
+.imagefield div {
+
+    width: 100%;
+    overflow: hidden;
+}
+
+.uploaded_image {
+
+    display: block;
+    margin: auto;
+
+    max-width: 100%;
+    max-height: 200px;
 }

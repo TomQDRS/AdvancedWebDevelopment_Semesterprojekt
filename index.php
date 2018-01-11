@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>imgup</title>
+    <title>toomanyimages</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -29,7 +29,7 @@
             <?php require('loadImages.php')?>
         </div>
     </section>
-    <footer>
+    <footer>    
         <a href="impressum.html" class="footer_link">Impressum</a>
     </footer>
 </body>

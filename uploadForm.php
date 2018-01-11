@@ -17,12 +17,11 @@
                 <button type="button" id="upload_image_button" onclick="document.getElementById('imageToUpload').click();">Hochladen</button>
             </div>
             
-            <input name="img_name" type="text">Name<br>
-            <input name="img_desc" type="text">Beschreibung<br>
-            <input name="img_private" type="checkbox">Bild privat hochladen<br>
+            <input name="img_name" type="text" placeholder="Name" required>Name<br>
+            <input name="img_desc" type="text" placeholder="Beschreibung">Beschreibung<br>
+            <input name="img_private" type="checkbox" value="private">Bild privat hochladen<br>
             <input type="submit" name="submit" value="submit">
         </form>
-        
     </section>
 </body>
 </html>

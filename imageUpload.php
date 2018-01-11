@@ -2,13 +2,17 @@
 
 print_r($_FILES);
 
+//FILE UPLOAD
 $target_dir = "uploaded_images/";
 $target_file = $target_dir . basename($_FILES["imageToUpload"]["name"]);
 $uploadOK = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+$private = 0;
+
 
 if(isset($_POST["submit"])) {
     print_r("IS SUBMIT");
+    //MARK: Check for Image
     //Check if it's a real file
     $check = getimagesize($_FILES["imageToUpload"]["tmp_name"]);
     if($check !== false) {
@@ -44,10 +48,44 @@ if(isset($_POST["submit"])) {
     } else {
         if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $target_file)) {
             echo "The file ". basename( $_FILES["imageToUpload"]["name"]). " has been uploaded.";
+            
+            if(isset($_POST['img_private']) && $_POST['img_private'] == 'private') {
+                $private = 1;
+            }
+            
+            addImageToDB($_POST['img_name'], $_POST['img_desc'],$target_file, 007, $private);
+            
         } else {
             echo "Sorry, there was an error uploading your file.";
         }
     }
+    
+}
+
+function addImageToDB($name, $desc, $path, $userid, $private) {
+    
+    //DATABASE
+    $servername = "localhost";
+    $username = "php_projekt";
+    $password = "php_projekt";
+    $dbname = "awd_projekt";
+
+    
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    } 
+    
+    $sql = "INSERT INTO image (NAME, DESCRIPTION, PATH, IMG_USER_ID, PRIVATE) VALUES ('".$name."', '".$desc."', '".$path."', ".$userid.", ".$private.")";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $conn->close();
     
 }
 ?>

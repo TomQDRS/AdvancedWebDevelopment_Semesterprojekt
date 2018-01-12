@@ -8,10 +8,7 @@
 
 <body>
     <nav>
-        <form action="imageUpload.php" method="post" enctype="multipart/form-data">
-            <input type="file" id="selectedImage" style="display: none;" onchange="this.form.submit()" />
-            <button type="button" class="nav_button" id="upload_nav_button" onclick="document.getElementById('selectedImage').click();" />
-        </form>
+            <button type="button" class="nav_button" id="upload_nav_button" onclick="document.location.href='uploadForm.php'" />
         <button class="nav_button" id="search_nav_button"></button>
         <img src="logos/imgup.png" alt="imgup logo" height="36" width="128" id="logo_nav_img">
         <button class="nav_button" id="login_nav_button"></button>

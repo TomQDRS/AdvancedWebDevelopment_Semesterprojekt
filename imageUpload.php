@@ -3,7 +3,7 @@
 /** IMAGE UPLOAD SCRIPT - created by Tom Quinders
 *
 * This script will handle the upload of an image. It is called when the user
-* submits the filled out form in uploadForm.php and return an error message
+* submits the filled out form in uploadForm.php and returns an error message
 * should it fail at any point.
 *
 * The main function of this script is uploadImage() which will be called when

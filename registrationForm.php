@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <section id="uploadContainer">
+    <section id="registerContainer">
         <form id="registrationForm" action = "registerUser.php" method="post">    
             <input name="usr_name" type="text" placeholder="Nutzername" oninput="checkForValidUsername(this)" required>Nutzername<br>
             <input name="usr_mail" type="email" placeholder="Email" required>E-Mail<br>

@@ -8,7 +8,7 @@
 * The main function of this script is loginUser() which will be called when
 * this script is confirmed to be called via POST SUBMIT.
 *
-* 4 TODOS LEFT
+* 2 TODOS LEFT
 */
 
 //GLOBAL VARIABLE - Error message may be set at multiple times

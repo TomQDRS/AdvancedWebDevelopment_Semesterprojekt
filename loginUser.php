@@ -77,9 +77,8 @@ function loginUser() {
         
         //Compare input password to hashed password via password_verify()
         if(password_verify($password, $hashedPasswordFromDB)) {
-            //TODO: CREATE SESSION
-            session_start();
-            $_SESSION["session_user_ID"] = $userID;
+            //call onLogin if passwords match
+            onLogin($userID, $conn);
             return TRUE;
         } else {
             $errorMessage = 'Invalid password. Please try again.';
@@ -90,6 +89,88 @@ function loginUser() {
         $errorMessage = 'Invalid username or email. Please try again.';
         return FALSE;
      }
+}
+
+/** ON LOGIN - created by Tom Quinders
+*
+* This function is called when the login is a success. The function always starts a session
+* with which the website will work from then on. Is the remember me checkbox checked, another
+* part is called in which attempts are made to set a cookie that remembers a certain special
+* token for the user. 
+* 
+* First the token is generated via generateRandomToken(), then an attempt is made to save
+* it in the database for the user in the "LOGINTOKEN" field. Should that attempt succeed,
+* a cookie is generated which remembers the userID with the token, hashed. The cookie expires
+* in 30 days. 
+*
+* The ideas for this process are largely inspired by an instruction set from a stackoverflow
+* answer to a question asking for the best procedure on a "remember me" function [2].
+*
+* [2] https://stackoverflow.com/questions/1354999/keep-me-logged-in-the-best-approach/17266448#17266448
+* Online; last access on 15.01.2018
+*/
+function onLogin($user, $conn) {
+    
+    //Begin session and set current user ID to the logged in user
+    session_start();
+    $_SESSION["session_user_ID"] = $user;
+    
+    //Check the checkbox for whether the user wants to stay logged in
+    if(isset($_POST['usr_rememberme']) && $_POST['usr_rememberme'] == 'rememberme') {
+        print_r("rememberme found");
+        //Generate token via generateRandomToken()
+        $token = generateRandomToken();
+        //Store the token in the DB
+        if(storeTokenForUser($user, $token, $conn)) {
+            //Create cookie associated with the user
+            $cookie = $user . ':' . $token;
+            $mac = hash_hmac('sha256', $cookie, 'DrFbVqit9x68349Uz8yji9LNHHN9q8FgyV1eokpRvfQk4GgOVjqMa1GpD7aA1VBG5djqtlcxZ1aP1h3oVzp6N3Mctt8X3fHQchh3fwJ655403fnp3J3NGc6N4H3jFxSJ');
+            $cookie .= ':' . $mac;
+            setcookie('rememberme', $cookie, time()+60*60*24*30);
+            /*print_r("cookieset");*/
+        }
+    } else {
+        //Remove token from the database 
+        removeTokenFromUser($user, $conn);
+    }
+}
+
+/** GENERATE RANDOM TOKEN - created by Tom Quinders
+*
+* This function generates and returns a hex token from random_bytes(256).
+*/
+function generateRandomToken() {
+    return bin2hex(random_bytes(256));
+}
+
+/** REMOVE TOKEN FROM USER - created by Tom Quinders
+*
+* This function clears the "LOGINTOKEN" field from the users entry in the database, should the
+* user wish to not be remembered past the active session. The field is cleared if the user
+* manually logs out, but since the cookie set in onLogin($user, $conn) might expire, the field
+* will be cleared for security reasons should the user login without wanting to be remembered.
+*/
+function removeTokenFromUser($user, $conn) {
+    $sql = "UPDATE `user` SET `LOGINTOKEN` =  null WHERE `ID` = '".$user."'";
+    $conn->query($sql);
+}
+
+
+/** STORE TOKEN FOR USER - created by Tom Quinders
+*
+* This function saves the generated login token in the database when the user logs in
+* with the "remember me" box ticked. The function will return TRUE or FALSE depending
+* on the success of the SQL query.
+*/
+function storeTokenForUser($user, $token, $conn) {
+    $sql = "UPDATE `user` SET `LOGINTOKEN` =  '".$token."' WHERE `ID` = '".$user."'";
+    if ($conn->query($sql) === TRUE) {
+        //The operation was a success, return TRUE
+        return TRUE;
+    } else {
+        //An error occured, return FALSE
+        return FALSE;
+    }
 }
 
 ?>

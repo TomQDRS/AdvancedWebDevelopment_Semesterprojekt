@@ -11,6 +11,7 @@
         <form id="loginForm" action = "loginUser.php" method="post">    
             <input name="usr_login" type="text" placeholder="Nutzername" required>Nutzername oder Email<br>
             <input name="usr_password" type="password" id="firstPassword" required>Passwort<br>
+            <input name="usr_rememberme" type="checkbox" value="rememberme">Eingeloggt bleiben<br>
             <input name="submit" type="submit"value="submit">
         </form>
     </section>

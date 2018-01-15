@@ -44,8 +44,6 @@ if(isset($_POST["submit"])) {
 * Returns TRUE if the files is uploaded correctly, FALSE if it runs into problems
 * at any point. Should it run into a problem, the global variable $errorMessage
 * will be set to an error message that should be displayed. 
-*
-* 1 TODO LEFT
 */
 function uploadImage() {
     
@@ -56,7 +54,8 @@ function uploadImage() {
     $sizeLimit = 5000000; //5 MB
 
     //CONTROL VARIABLES - may be modified
-    $private = 0;   
+    $private = 0;
+    $userID = 0;
     global $errorMessage;
     
     //Check if uploaded file is actually an image
@@ -85,6 +84,15 @@ function uploadImage() {
     while(file_exists($target_file)) {
         $target_file = $target_dir.generateRandomString(mt_rand(5,10)).".".$imageFileType;
     }
+    
+    //Get the user from the session, terminate if no user logged in
+    session_start();
+    if(isset($_SESSION["session_user_ID"]) && !empty($_SESSION["session_user_ID"])) {
+            $userID = $_SESSION["session_user_ID"];
+    } else {
+        $errorMessage = "You aren't logged in! Please log in or register to upload an image.";
+        return FALSE;
+    }
 
     //Move the uploaded file from the temp location to its target destination
     if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $target_file)) {
@@ -95,8 +103,7 @@ function uploadImage() {
         }
 
         //Add image data to database via addImageToDB()
-        //TODO: replace 007 with actual current user!
-        if(addImageToDB($_POST['img_name'], $_POST['img_desc'], $target_file, 007, $private)) {
+        if(addImageToDB($_POST['img_name'], $_POST['img_desc'], $target_file, $userID, $private)) {
             //Everything worked in the file upload process, return to original page
             return TRUE;
         } else {
@@ -174,7 +181,7 @@ function addImageToDB($name, $desc, $path, $userid, $private) {
 * unlikely, it will be generated anew.
 *
 * [1] https://stackoverflow.com/questions/4356289/php-random-string-generator
-*     Online; Zugriff 11.01.2018
+*     Online; last access on 11.01.2018
 */
 function generateRandomString($length = 10) {
     

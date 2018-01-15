@@ -18,10 +18,8 @@ $errorMessage = "";
 if(isset($_POST["submit"])) {
     
     if(loginUser()) {
-        //Return empty handed to signify the upload was completed
+        //Return with session active
         //TODO: Maybe place a success message to return a value either way?
-        //TODO: Return to the actual site without header
-        /*return;*/
         header("Location:index.php");
     } else {
         //Return the error message to be displayed in the original form
@@ -65,20 +63,23 @@ function loginUser() {
     } 
     
     //Get row where username or email exists
-    $sql = "SELECT `PASSWORD` FROM `user` WHERE `USERNAME` = '".$login."' OR `EMAIL` = '".$login."'";
+    $sql = "SELECT `PASSWORD`, `ID` FROM `user` WHERE `USERNAME` = '".$login."' OR `EMAIL` = '".$login."'";
     
     $result = $conn->query($sql);
-
+    
     if ($result->num_rows > 0) {
 
         while($row = $result->fetch_assoc()) {
             //Get Password from database
             $hashedPasswordFromDB = $row["PASSWORD"];
+            $userID = $row["ID"];
         }
         
         //Compare input password to hashed password via password_verify()
         if(password_verify($password, $hashedPasswordFromDB)) {
             //TODO: CREATE SESSION
+            session_start();
+            $_SESSION["session_user_ID"] = $userID;
             return TRUE;
         } else {
             $errorMessage = 'Invalid password. Please try again.';

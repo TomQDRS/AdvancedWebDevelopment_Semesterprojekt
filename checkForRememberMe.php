@@ -57,7 +57,7 @@ function rememberMe() {
         }
         
         //Get usertoken from database
-        $usertoken = fetchTokenByUserIDe($user);
+        $usertoken = fetchTokenByUserID($user);
         if($usertoken != null) {
             //If token exists, check if the hashes match for both tokens
             if (hash_equals($usertoken, $token)) {

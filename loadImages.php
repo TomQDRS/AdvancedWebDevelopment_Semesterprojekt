@@ -13,19 +13,19 @@
 
 //DATABASE ACCESS VARIABLES - shouldn't be modified
 
-if(isset($_REQUEST)) {
+if(isset($_GET)) {
     
     $userID = 0;
     $orderBy = "`UPLOADED_ON` DESC";
     
-    if(isset($_REQUEST["user"]))
+    if(isset($_GET["user"]))
     {
-        $userID = $_REQUEST["user"];
+        $userID = $_GET["user"];
     }
         
-   if(isset($_REQUEST["order"]))
+   if(isset($_GET["order"]))
     {
-        switch($_REQUEST["order"]) {
+        switch($_GET["order"]) {
             case "recent":
                 $orderBy = "`UPLOADED_ON` DESC";
                 break;
@@ -85,7 +85,7 @@ function loadAllImagesWith($userID, $orderBy) {
 
             }
         } else {
-            echo "No images found. Consider uploading one yourself!";
+            echo "Sorry, no images were found!";
         }
 
         //Load each image from "imagePaths" into an imagefield container.

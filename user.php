@@ -2,6 +2,11 @@
 <html>
 
 <?php 
+    if(!isset($_GET["id"])) {
+        http_response_code(404);
+        include('404.php');
+        die();   
+    }
     //This needs to be called in every normal display page to check if the user is logged in
     include 'checkForRememberMe.php';
     //DEBUG: REMOVE ON RELEASE
@@ -25,12 +30,14 @@
             <div id="user_name">Username: <?php getUserName(); ?></div>
             <div id="user_registered_on">Registriert am: <?php getUserRegisteredOn(); ?></div>
         </div>
-        <div id="minibar">Bilder dieses Nutzers:</div>
-        <div id="imagecontainer">
-            <?php require('loadImages.php');
-            loadAllImagesWith($_SESSION["session_user_ID"]);
-            ?>
-        </div>
+        <div class="minibar"><div>Bilder dieses Nutzers:</div>  Sortieren nach:
+            <select id="orderBy" onchange="reloadImages()">
+                <option value="recent">Neueste zuerst</option>
+                <option value="oldest">Älteste zuerst</option>
+                <option value="name_asce">Name (aufsteigend)</option>
+                <option value="name_desc">Name (absteigend)</option>
+            </select></div>
+        <div id="imagecontainer"></div>
     </section>
     <footer>    
         <a href="impressum.html" class="footer_link">Impressum</a>
@@ -57,7 +64,7 @@ function getUserName() {
     }
     
     //Get row where username or email exists
-    $sql = "SELECT `USERNAME` FROM `user` WHERE `ID` = '".$_SESSION["session_user_ID"]."'";
+    $sql = "SELECT `USERNAME` FROM `user` WHERE `ID` = '".$_GET["id"]."'";
     
     $result = $conn->query($sql);
     
@@ -84,7 +91,7 @@ function getUserRegisteredOn() {
     }
     
     //Get row where username or email exists
-    $sql = "SELECT `REGISTERED_ON` FROM `user` WHERE `ID` = '".$_SESSION["session_user_ID"]."'";
+    $sql = "SELECT `REGISTERED_ON` FROM `user` WHERE `ID` = '".$_GET["id"]."'";
     
     $result = $conn->query($sql);
     
@@ -95,6 +102,38 @@ function getUserRegisteredOn() {
             
 ?>
     
+<script type="text/javascript" language="javascript">
+    
+     window.onload = reloadImages();
+    
+    function reloadImages() {
 
+        var myNode = document.getElementById("imagecontainer");
+        while (myNode.firstChild) {
+            myNode.removeChild(myNode.firstChild);
+        }
+                
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            document.getElementById("imagecontainer").innerHTML = this.responseText;
+        }
+        
+        
+        var request = "loadImages.php?";
+        
+        var userID = <?php echo $_GET["id"]?>;
+        request += "user=" + userID;
+        
+        var orderBy = document.getElementById("orderBy");
+        var orderValue = orderBy.options[orderBy.selectedIndex].value; 
+        
+        request += "&order=" + orderValue;
+                
+        xmlhttp.open("GET", request, true);
+        xmlhttp.send();
+    }
+
+    
+</script>
     
 </html>

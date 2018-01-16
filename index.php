@@ -79,7 +79,7 @@
         if(sessionValue == 0) {
             document.location.href='loginform.php'
         } else {
-            document.location.href='user.php?id='.concat(sessionValue);
+            document.location.href='user.php?id=' + sessionValue;
         }
     }
 

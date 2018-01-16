@@ -6,6 +6,12 @@
         http_response_code(404);
         include('404.php');
         die();   
+    } else {
+        if(!checkIfUserExists($_GET["id"])) {
+            http_response_code(404);
+        include('404.php');
+        die(); 
+        }
     }
     //This needs to be called in every normal display page to check if the user is logged in
     include 'checkForRememberMe.php';
@@ -45,7 +51,39 @@
 </body>
 
 <?php
-            
+
+function checkIfUserExists($id) {
+      //DATABASE ACCESS VARIABLES - shouldn't be modified
+    $servername = "localhost";
+    $db_username = "php_projekt";
+    $db_password = "php_projekt";
+    $dbname = "awd_projekt";
+    
+    $conn = new mysqli($servername, $db_username, $db_password, $dbname);
+    //Check if the connection succeeded, otherwise abort
+    if ($conn->connect_error) {
+        //An error occured, return FALSE for error handling
+        $errorMessage = "We're sorry, there was an error trying to establish a connection to our database. Please try again later.";
+        echo "ERROR";
+        return;
+    }
+    
+    //Get row where username or email exists
+    $sql = "SELECT COUNT(`ID`) AS USR_EXISTS FROM `user` WHERE `ID` = ".$id;
+    
+    $result = $conn->query($sql);
+    
+    $row = $result->fetch_assoc();
+    
+    if($row["USR_EXISTS"] == 1) {
+        return true;
+    } else {
+        return false;
+    }
+    
+    
+}
+
 function getUserName() {
 
     //DATABASE ACCESS VARIABLES - shouldn't be modified

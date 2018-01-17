@@ -98,6 +98,27 @@ footer {
     font-size: 14px;
 }
 
+
+.user_info_container {
+    width: 100%;
+    float: left;
+}
+
+#user_profilepic {
+    width: 150px;
+    height: 150px;
+    float: left;
+}
+
+.user_info_container:after{
+    content: "";
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
+
+
+
 #imagecontainer {
     display: flex;
     padding: 8px;
@@ -160,7 +181,7 @@ footer {
 
 .uploaded_image {
 
-    display: contents;
+    display: block;
     margin: auto;
 
     max-width: 100%;

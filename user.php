@@ -19,6 +19,7 @@
     <title><?php getUserName(); ?> - toomanyimages</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+    
 
 <body>
     <nav>
@@ -28,7 +29,8 @@
         <button class="nav_button" id="login_nav_button" onclick="onLoginFormClick()"></button>
     </nav>
     <section id="main">
-        <div id="user_info_container">
+        <div class="user_info_container">
+            <img id="user_profilepic" src="profile_images/standard/standard-150.png">
             <div id="user_name">Nutzername: <?php getUserName(); ?></div>
             <div id="user_registered_on">Registriert am: <?php getUserRegisteredOn(); ?></div>
         </div>

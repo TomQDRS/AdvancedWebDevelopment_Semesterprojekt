@@ -2,19 +2,15 @@
 <html>
 
 <?php 
+    
+    include 'sessioncontrol.php';
+    
     if(!isset($_GET["id"]) || !checkIfUserExists($_GET["id"])) {
         http_response_code(404);
         include('404.php');
         die();   
-    } /*else {
-        if(!checkIfUserExists($_GET["id"])) {
-            http_response_code(404);
-        include('404.php');
-        die(); 
-        }
-    }*/
+    }
     //This needs to be called in every normal display page to check if the user is logged in
-    include 'checkForRememberMe.php';
     //DEBUG: REMOVE ON RELEASE
     //print_r($_SESSION); 
 ?>
@@ -33,7 +29,7 @@
     </nav>
     <section id="main">
         <div id="user_info_container">
-            <div id="user_name">Username: <?php getUserName(); ?></div>
+            <div id="user_name">Nutzername: <?php getUserName(); ?></div>
             <div id="user_registered_on">Registriert am: <?php getUserRegisteredOn(); ?></div>
         </div>
         <div class="minibar"><div>Bilder dieses Nutzers:</div>  Sortieren nach:

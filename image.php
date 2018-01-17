@@ -3,7 +3,7 @@
 
 <?php
     //This needs to be called in every normal display page to check if the user is logged i
-    include 'checkForRememberMe.php';
+    include 'sessioncontrol.php';
 
     
     if(!isset($_GET["id"]) || !checkIfImageExists($_GET["id"])) {

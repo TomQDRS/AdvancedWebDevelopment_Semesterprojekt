@@ -160,12 +160,13 @@ footer {
 
 .uploaded_image {
 
-    display: block;
+    display: contents;
     margin: auto;
 
     max-width: 100%;
     max-height: 200px;
 }
+
 
 #imageUploadForm {
     display: block;
@@ -176,4 +177,8 @@ footer {
 #uploadButtonContainerField {
     margin: auto;
     width: 75%;
+}
+
+.uploaded_image_name {
+    text-align: center;
 }

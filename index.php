@@ -3,9 +3,9 @@
 
 <?php 
     //This needs to be called in every normal display page to check if the user is logged in
-    include 'checkForRememberMe.php';
+    include 'sessioncontrol.php';
     //DEBUG: REMOVE ON RELEASE
-    print_r($_SESSION);
+    //print_r($_SESSION);
 ?>
     
 <head>

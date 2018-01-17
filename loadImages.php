@@ -93,7 +93,7 @@ function loadAllImagesWith($userID, $orderBy, $private) {
 
                 echo '<div class = "imagefield" onclick = "document.location.href=\'image.php?id='.$row["ID"].'\'">';
                 echo '<img class="uploaded_image" src="'.$row["PATH"].'"/>';
-                echo '<div>'.$row["NAME"].'</div>';
+                echo '<div style="    text-align: center;">'.$row["NAME"].'</div>';
                 echo '</div>';
 
             }

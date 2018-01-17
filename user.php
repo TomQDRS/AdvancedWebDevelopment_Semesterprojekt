@@ -2,17 +2,17 @@
 <html>
 
 <?php 
-    if(!isset($_GET["id"])) {
+    if(!isset($_GET["id"]) || !checkIfUserExists($_GET["id"])) {
         http_response_code(404);
         include('404.php');
         die();   
-    } else {
+    } /*else {
         if(!checkIfUserExists($_GET["id"])) {
             http_response_code(404);
         include('404.php');
         die(); 
         }
-    }
+    }*/
     //This needs to be called in every normal display page to check if the user is logged in
     include 'checkForRememberMe.php';
     //DEBUG: REMOVE ON RELEASE
@@ -28,7 +28,7 @@
     <nav>
             <button type="button" class="nav_button" id="upload_nav_button" onclick="document.location.href='uploadForm.php'" />
         <button class="nav_button" id="search_nav_button"></button>
-        <img src="logos/imgup.png" alt="imgup logo" height="36" width="128" id="logo_nav_img">
+        <img src="logos/imgup.png" alt="imgup logo" height="36" width="128" id="logo_nav_img" onclick="document.location.href='index.php'">
         <button class="nav_button" id="login_nav_button" onclick="onLoginFormClick()"></button>
     </nav>
     <section id="main">
@@ -156,12 +156,18 @@ function getUserRegisteredOn() {
             document.getElementById("imagecontainer").innerHTML = this.responseText;
         }
         
-        
         var request = "loadImages.php?";
         
         var userID = <?php echo $_GET["id"]?>;
         request += "user=" + userID;
         
+        var private = "public";
+        if(userID == <?php echo $_SESSION["session_user_ID"]?>) {
+           private = "both";
+        }
+
+        request += "&private=" + private;
+
         var orderBy = document.getElementById("orderBy");
         var orderValue = orderBy.options[orderBy.selectedIndex].value; 
         

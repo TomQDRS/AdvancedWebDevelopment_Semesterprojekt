@@ -17,6 +17,7 @@ if(isset($_GET)) {
     
     $userID = 0;
     $orderBy = "`UPLOADED_ON` DESC";
+    $private = "`PRIVATE` = 0";
     
     if(isset($_GET["user"]))
     {
@@ -41,21 +42,31 @@ if(isset($_GET)) {
         }
     }
     
-    loadAllImagesWith($userID, $orderBy);
+    if(isset($_GET["private"])) {
+        switch($_GET["private"]) {
+            case "public":
+                $private = "`PRIVATE` = 0";
+                break;
+            case "private":
+                $private = "`PRIVATE` = 1";
+                break;
+            case "both":
+                $private = "(`PRIVATE` = 0 OR `PRIVATE` = 1)";
+                break;
+        }
+    }
+    
+    loadAllImagesWith($userID, $orderBy, $private);
 }
 
 
 
-function loadAllImagesWith($userID, $orderBy) {
+function loadAllImagesWith($userID, $orderBy, $private) {
 
     $servername = "localhost";
     $username = "php_projekt";
     $password = "php_projekt";
     $dbname = "awd_projekt";
-
-    //IMAGE DATA ARRAYS - will be filled with data from sql query
-    $imagePaths = [];
-    $imageNames = [];
 
     //Begin connection to database
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -69,7 +80,7 @@ function loadAllImagesWith($userID, $orderBy) {
         //SELECT all public images, ordered by upload date
         //TODO: Change SQL statement based on applied filters
         $sql = "SELECT * FROM `image` ";
-        $sql .= "WHERE `PRIVATE` = 0 ";
+        $sql .= "WHERE ".$private." ";
         if($userID != 0) {
             $sql .= "AND `IMG_USER_ID` = ".$userID." ";
         }
@@ -80,27 +91,14 @@ function loadAllImagesWith($userID, $orderBy) {
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
 
-                $imagePaths[] = $row["PATH"];
-                $imageNames[] = $row["NAME"];
+                echo '<div class = "imagefield" onclick = "document.location.href=\'image.php?id='.$row["ID"].'\'">';
+                echo '<img class="uploaded_image" src="'.$row["PATH"].'"/>';
+                echo '<div>'.$row["NAME"].'</div>';
+                echo '</div>';
 
             }
         } else {
             echo "Sorry, no images were found!";
-        }
-
-        //Load each image from "imagePaths" into an imagefield container.
-        //TODO: Consider handling this more elegantly like in a dictionary with
-        //key value pairs. Right now this is very error-potential heavy.
-        $counter = 0;
-
-        foreach ($imagePaths as $image) {
-
-            echo '<div class = "imagefield">';
-            echo '<img class="uploaded_image" src="'.$image.'"/>';
-            echo '<div>'.$imageNames[$counter].'</div>';
-            echo '</div>';
-
-            $counter++;
         }
     }
 }

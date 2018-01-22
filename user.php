@@ -31,7 +31,8 @@
     <section id="main">
         <div class="user_info_container">
             <img id="user_profilepic" src="profile_images/standard/standard-150.png">
-            <div id="user_name">Nutzername: <?php getUserName(); ?></div>
+            <div id="user_name"><?php getUserName(); ?> </div>
+			<br><br>
             <div id="user_registered_on">Registriert am: <?php getUserRegisteredOn(); ?></div>
         </div>
         <div class="minibar"><div>Bilder dieses Nutzers:</div>  Sortieren nach:

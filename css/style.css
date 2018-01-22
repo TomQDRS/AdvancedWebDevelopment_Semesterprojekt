@@ -56,7 +56,6 @@ nav {
     right: 12px;
 }
 
-
 #logo_nav_img {
     background-color: transparent;
     position: absolute;
@@ -94,20 +93,45 @@ footer {
 }
 
 .minibar {
-    padding: 4px;
-    font-size: 14px;
+	width: 100%;
+	float: left;
+	padding: 15px;
+    font-size: 15px;
 }
 
+.minibar:after{
+    content: "";
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
 
 .user_info_container {
     width: 100%;
     float: left;
+	padding: 15px;
+	background-color: #333333;
 }
 
 #user_profilepic {
     width: 150px;
     height: 150px;
     float: left;
+	border-radius: 10px;
+}
+
+#user_name{
+	float: left;
+	padding-left: 15px;
+	font-size: 20px;
+	background-color: #333333;
+}
+
+#user_registered_on{
+	float: left;
+	padding-left: 15px;
+	font-size: 15px;
+	background-color: #333333;
 }
 
 .user_info_container:after{
@@ -116,8 +140,6 @@ footer {
     clear: both;
     visibility: hidden;
 }
-
-
 
 #imagecontainer {
     display: flex;
@@ -188,11 +210,16 @@ footer {
     max-height: 200px;
 }
 
-
+#uploadContainer{
+	position:absolute;
+	top:48px;
+	width:100%;
+}
 #imageUploadForm {
     display: block;
     margin: auto;
     text-align: center;
+	padding-top:15px;
 }
 
 #uploadButtonContainerField {
@@ -202,4 +229,13 @@ footer {
 
 .uploaded_image_name {
     text-align: center;
+}
+
+#impressum{
+	padding:15px;
+}
+
+select{
+	border:none;
+	box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
 }

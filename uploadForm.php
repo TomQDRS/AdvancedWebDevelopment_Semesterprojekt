@@ -20,12 +20,37 @@
             <div id="uploadButtonContainerField">
                 <button type="button" id="upload_image_button" onclick="document.getElementById('imageToUpload').click();">Hochladen</button>
             </div>
-            <br>
-            <input name="img_name" type="text" placeholder="Name" required> Name<br><br>
-            <input name="img_desc" type="text" placeholder="Beschreibung"> Beschreibung<br><br>
-            <input name="img_private" type="checkbox" value="private">Bild privat hochladen<br><br>
+            <br>Name
+            <input name="img_name" type="text" placeholder="Name" required> <br><br>Beschreibung
+            <input name="img_desc" type="text" placeholder="Beschreibung"> <br><br>Bild privat hochladen
+            <input name="img_private" type="checkbox" value="private"><br><br><!--Tag
+            <input id="img_tag_input"  type="text" placeholder="Tag suchen oder erstellen..."><br><br>
+            <div id="tagcontainer">
+            
+            </div>
+            <br><br>-->
+            
             <input type="submit" name="submit" value="submit">
         </form>
     </section>
 </body>
+    
+
+<script type="text/javascript">
+/*
+
+    onkeyup="onkeyup_check(event)"
+
+    function onkeyup_check(e) { 
+
+     var keyCode = e.keyCode || e.which; 
+     if(keyCode == 13) { 
+         e.preventDefault(); 
+         alert("nibba"); 
+         return false; 
+    } 
+    }*/
+  
+</script>
+    
 </html>

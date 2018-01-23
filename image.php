@@ -16,34 +16,64 @@
         die();
     }
 ?>
-    
-<head>
-    <title><?php getImageName(); ?> - toomanyimages</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
 
-<body>
-    <nav>
+    <head>
+        <title>
+            <?php getImageName(); ?> - toomanyimages</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <nav>
             <button type="button" class="nav_button" id="upload_nav_button" onclick="document.location.href='uploadForm.php'" />
-        <button class="nav_button" id="search_nav_button"></button>
-        <img src="logos/imgup.png" alt="imgup logo" height="36" width="128" id="logo_nav_img" onclick="document.location.href='index.php'">
-        <button class="nav_button" id="login_nav_button" onclick="onLoginFormClick()"></button>
-    </nav>
-    <section id="main">
-        <div id="image_detail_container">
-            <div id="image_detail_view"><img src="<?php loadImage(); ?>"></div>
-            <div id="image_detail_name">Name: <?php getImageName(); ?></div>
-            <div id="image_detail_description">Beschreibung: <?php getImageDescription(); ?></div>
-            <div id="user_for_image">Hochgeladen von: <?php getUserForImage(); ?></div>
-            <div id="image_uploaded_on">Hochgeladen am: <?php getImageUploadedOn(); ?></div>
-        </div>
-    </section>
-    <footer>    
-        <a href="impressum.html" class="footer_link">Impressum</a>
-    </footer>
-</body>
+            <button class="nav_button" id="search_nav_button"></button>
+            <img src="logos/imgup.png" alt="imgup logo" height="36" width="128" id="logo_nav_img" onclick="document.location.href='index.php'">
+            <button class="nav_button" id="login_nav_button" onclick="onLoginFormClick()"></button>
+        </nav>
+        <section id="main">
+            <div id="image_detail_container">
+                <div id="image_detail_view"><img src="<?php loadImage(); ?>"></div>
+                <div id="image_detail_name">Name:
+                    <?php getImageName(); ?>
+                </div>
+                <div id="image_detail_description">Beschreibung:
+                    <?php getImageDescription(); ?>
+                </div>
+                <div id="user_for_image">Hochgeladen von:
+                    <?php getUserForImage(); ?>
+                </div>
+                <div id="image_uploaded_on">Hochgeladen am:
+                    <?php getImageUploadedOn(); ?>
+                </div>
+            </div>
+            <br>
+            <div class="tagarea">
+                <div id="tagdisplay"></div>
+                <br>
+                <button onclick="toggleTagInput()">Tags ändern</button>
+                <input id="tag_input_field" style="display:none;" type="text" placeholder="Tag erstellen oder suchen...">
+            </div>
+        </section>
+        <footer>
+            <a href="impressum.html" class="footer_link">Impressum</a>
+        </footer>
+    </body>
 
-<?php
+    <script type="text/javascript">
+        
+        function toggleTagInput() {
+
+            var x = document.getElementById("tag_input_field");
+            if (x.style.display == "none") {
+                x.style.display = "inline";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+    </script>
+
+    <?php
     
 function loadImage() {
     //DATABASE ACCESS VARIABLES - shouldn't be modified
@@ -242,5 +272,5 @@ function getImageUploadedOn() {
 }            
             
 ?>
-    
+
 </html>

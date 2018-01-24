@@ -5,10 +5,6 @@
 * This script handles loading the images that should be
 * displayed to the page it is called in via "require", in this
 * case "index.php".
-*
-* WORK IN PROGRESS
-* TODO: Accept parameters in some way so that the load image
-*       query can be filtered for only the wanted images
 */
 
 //DATABASE ACCESS VARIABLES - shouldn't be modified

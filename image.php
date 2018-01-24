@@ -51,7 +51,8 @@
                 <div id="tagdisplay"></div>
                 <br>
                 <button onclick="toggleTagInput()">Tags ändern</button>
-                <input id="tag_input_field" style="display:none;" type="text" placeholder="Tag erstellen oder suchen...">
+                <input id="tag_input_field" style="display:none;" onkeyup="checkfortaginput(this)" type="text" placeholder="Tag erstellen oder suchen...">
+                <div id="livesearch"></div>
             </div>
         </section>
         <footer>
@@ -60,7 +61,6 @@
     </body>
 
     <script type="text/javascript">
-        
         function toggleTagInput() {
 
             var x = document.getElementById("tag_input_field");
@@ -69,6 +69,35 @@
             } else {
                 x.style.display = "none";
             }
+        }
+
+        function checkfortaginput(taginput) {
+
+            input = taginput.value;
+            console.log(input);
+
+            if (input.length == 0) {
+
+                document.getElementById("livesearch").innerHTML = "";
+                document.getElementById("livesearch").style.border = "0px";
+                return;
+            }
+
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else { // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("livesearch").innerHTML = this.responseText;
+                    document.getElementById("livesearch").style.border = "1px solid #A5ACB2";
+                }
+            }
+            xmlhttp.open("GET", "livesearch.php?q=" + input, true);
+            xmlhttp.send();
         }
 
     </script>

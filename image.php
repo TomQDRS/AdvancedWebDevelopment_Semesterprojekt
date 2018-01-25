@@ -33,26 +33,43 @@
         <section id="main">
             <div id="image_detail_container">
                 <div id="image_detail_view"><img src="<?php loadImage(); ?>"></div>
-                <div id="image_detail_name">Name:
-                    <?php getImageName(); ?>
-                </div>
-                <div id="image_detail_description">Beschreibung:
-                    <?php getImageDescription(); ?>
-                </div>
-                <div id="user_for_image">Hochgeladen von:
-                    <?php getUserForImage(); ?>
-                </div>
-                <div id="image_uploaded_on">Hochgeladen am:
-                    <?php getImageUploadedOn(); ?>
+                <div id=image_details>
+                    <div id="image_detail_name">
+                        <?php getImageName(); ?>
+                    </div>
+                    <div id="image_detail_description">
+                        <?php getImageDescription(); ?>
+                    </div>
+                    <div id="image_detail_meta">
+                        <div id="user_for_image">Hochgeladen von:
+                            <?php getUserForImage(); ?>
+                        </div>
+                        <div id="image_uploaded_on">Hochgeladen am:
+                            <?php getImageUploadedOn(); ?>
+                        </div>
+
+                        <div class="tagarea">
+                            <div id="tagdisplay"></div>
+                            <br>
+                            <button onclick="toggleTagInput()">Tags ändern</button>
+                            <input id="tag_input_field" style="display:none;" onkeyup="checkfortaginput(this)" type="text" placeholder="Tag erstellen oder suchen...">
+                            <div id="livesearch"></div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
             <br>
-            <div class="tagarea">
-                <div id="tagdisplay"></div>
-                <br>
-                <button onclick="toggleTagInput()">Tags ändern</button>
-                <input id="tag_input_field" style="display:none;" onkeyup="checkfortaginput(this)" type="text" placeholder="Tag erstellen oder suchen...">
-                <div id="livesearch"></div>
+
+            <div class="commentarea">
+                <?php getCommentsForImage(); ?>
+                <div id="commentinput">
+                    <!--<input id="commentinputfield" type="text" name="comment" placeholder="Kommentar schreiben...">-->
+                    <!--<textarea name="comment" id="commentinputfield" placeholder="Kommentar schreiben..."></textarea>-->
+                    <span contenteditable="true" id="commentinputfield" name="comment" placeholder="Kommentar schreiben..."></span>
+                    <button id="sendcommentbutton" onclick="validatecomment();" value="Kommentieren">Kommentieren</button>
+                </div>
             </div>
         </section>
         <footer>
@@ -69,6 +86,114 @@
             } else {
                 x.style.display = "none";
             }
+        }
+
+        function addtag(tag) {
+
+
+        }
+
+        function postComment(comment) {
+
+            document.getElementById("sendcommentbutton").disabled = true;
+
+
+            console.log("got there");
+
+            var xmlhttp = new XMLHttpRequest();
+
+            var url = "postcomment.php";
+            var request = "";
+
+            request += "user=" + "<?php echo $_SESSION["session_user_ID"]; ?>";
+            request += "&image=" + "<?php echo $_GET["id"];?>";
+            request += "&comment=" + encodeURIComponent(comment);
+
+            xmlhttp.open("POST", url, true);
+
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            xmlhttp.onreadystatechange = function() { //Call a function when the state changes.
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    location.reload();
+                }
+            }
+
+            xmlhttp.send(request);
+        }
+
+        function validatecomment() {
+            var cmtinput = document.getElementById("commentinputfield");
+            var text = cmtinput.innerHTML;
+
+            var textvalid = false;
+
+            while (textvalid == false) {
+
+                textvalid = true;
+
+                if (text.startsWith("<div><br></div>")) {
+                    console.log(text);
+                    text = text.replace("<div><br></div>", "");
+                    textvalid = false;
+                }
+
+                if (text.startsWith("<br>")) {
+                    text = text.replace("<br>", "");
+                    textvalid = false;
+
+                }
+
+                if (text.startsWith(" ")) {
+                    text = text.replace(" ", "");
+                    textvalid = false;
+
+                }
+
+                if (text.startsWith("&nbsp;")) {
+                    text = text.replace("&nbsp;", "");
+                    textvalid = false;
+
+                }
+
+
+                if (text.endsWith("<div><br></div>")) {
+                    console.log(text);
+                    text = text.replace(new RegExp("<div><br></div>$"), "");
+                    textvalid = false;
+                }
+
+                if (text.endsWith("<br>")) {
+                    text = text.replace(new RegExp("<br>$"), "");
+                    textvalid = false;
+
+                }
+
+                if (text.endsWith(" ")) {
+                    text = text.replace(new RegExp(" $"), "");
+                    textvalid = false;
+
+                }
+
+                if (text.endsWith("&nbsp;")) {
+                    text = text.replace(new RegExp("&nbsp;$"), "");
+                    textvalid = false;
+
+                }
+
+                if (text.endsWith("<div>")) {
+                    text = text.replace(new RegExp("<div>$"), "");
+                    textvalid = false;
+
+                }
+
+
+            }
+
+            if (text.length != 0) {
+                postComment(text);
+            }
+
         }
 
         function checkfortaginput(taginput) {
@@ -103,6 +228,7 @@
     </script>
 
     <?php
+
     
 function loadImage() {
     //DATABASE ACCESS VARIABLES - shouldn't be modified
@@ -298,7 +424,44 @@ function getImageUploadedOn() {
     while($row = $result->fetch_assoc()) {
         echo $row["UPLOADED_ON"];
     }
-}            
+}        
+    
+function getCommentsForImage() {
+     //DATABASE ACCESS VARIABLES - shouldn't be modified
+    $servername = "localhost";
+    $db_username = "php_projekt";
+    $db_password = "php_projekt";
+    $dbname = "awd_projekt";
+    
+     $conn = new mysqli($servername, $db_username, $db_password, $dbname);
+    //Check if the connection succeeded, otherwise abort
+    if ($conn->connect_error) {
+        //An error occured, return FALSE for error handling
+        $errorMessage = "We're sorry, there was an error trying to establish a connection to our database. Please try again later.";
+        echo "ERROR";
+        return;
+    }
+    
+    //Get row where username or email exists
+    $sql = "SELECT `CONTENT`, `POSTED_ON`, `user`.`USERNAME`, `user`.`ID` FROM `comment` INNER JOIN `user` ON `CMT_USER_ID`= `user`.`ID` WHERE `CMT_IMAGE_ID` = '".$_GET["id"]."' ORDER BY `POSTED_ON` ASC";
+    
+    $result = $conn->query($sql);
+    
+    while($row = $result->fetch_assoc()) {
+        
+        $date = explode(" ", $row["POSTED_ON"]);
+        
+        echo "<div class = 'comment'>"
+            ."<div class = 'comment_userinfo'>"
+            ."<img src='profile_images/standard/standard-150.png'>"
+            ."<a href='user.php?id=".$row["ID"]."'>".$row["USERNAME"]."</a>"
+              ."<div>".$date[0]."</div>"
+            ."</div>"
+            ."<span>".$row["CONTENT"]."</span>"
+            ."</div>";
+        
+    }
+}
             
 ?>
 

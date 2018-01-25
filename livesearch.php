@@ -13,8 +13,8 @@ $conn = new mysqli($servername, $db_username, $db_password, $dbname);
 //Check if the connection succeeded, otherwise abort
 if ($conn->connect_error) {
     //An error occured, return FALSE for error handling
-    $errorMessage = "We're sorry, there was an error trying to establish a connection to our database. Please try again later.";
-    echo "ERROR";
+    echo "CONNECTION ERROR";
+    return;
 }
 
 //Get row where username or email exists
@@ -22,9 +22,13 @@ $sql = "SELECT `NAME` FROM `tag` WHERE `NAME` LIKE '".$taginput."%'";
 
 $result = $conn->query($sql);
 
+$response = "";
+
 while($row = $result->fetch_assoc()) {
-     print("<p>".$row['NAME']."<p>");
     
+    $response .= "<div onclick='addtag(\"".$row['NAME']."\")'>".$row['NAME']."</div>";
 }
+
+echo $response;
 
 ?>

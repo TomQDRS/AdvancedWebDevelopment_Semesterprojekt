@@ -93,6 +93,7 @@
 function getlinksindropdown() {
     
     if(isset($_SESSION["session_user_ID"]) && !empty($_SESSION["session_user_ID"])) {
+        echo '<a href="user.php?id='.$_SESSION["session_user_ID"].'">Profil</a>';
         echo '<a href="logout.php">Ausloggen</a>';
     } else {
 

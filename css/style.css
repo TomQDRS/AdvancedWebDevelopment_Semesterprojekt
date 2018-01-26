@@ -460,3 +460,7 @@ select {
 #image_uploaded_on {
     float:right;
 }
+
+.tagarea {
+    float:left;
+}

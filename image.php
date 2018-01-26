@@ -47,19 +47,16 @@
                         <div id="image_uploaded_on">Hochgeladen am:
                             <?php getImageUploadedOn(); ?>
                         </div>
-
+                        <br>
                         <div class="tagarea">
-                            <div id="tagdisplay"></div>
-                            <br>
-                            <button onclick="toggleTagInput()">Tags ändern</button>
-                            <input id="tag_input_field" style="display:none;" onkeyup="checkfortaginput(this)" type="text" placeholder="Tag erstellen oder suchen...">
-                            <div id="livesearch"></div>
+                            <div id="tagdisplay">Tags: <?php getTagsForImage();?></div>
                         </div>
-
                     </div>
-
+                </div>   
+                    <button onclick="toggleTagInput()">Tags ändern</button>
+                    <input id="tag_input_field" style="display:none;" onkeyup="checkfortaginput(this)" type="text" placeholder="Tag erstellen oder suchen...">
+                    <div id="livesearch"></div>
                 </div>
-            </div>
             <br>
 
             <div class="commentarea">
@@ -229,6 +226,31 @@
 
     <?php
 
+    function getTagsForImage() {
+            //DATABASE ACCESS VARIABLES - shouldn't be modified
+        $servername = "localhost";
+        $db_username = "php_projekt";
+        $db_password = "php_projekt";
+        $dbname = "awd_projekt";
+
+         $conn = new mysqli($servername, $db_username, $db_password, $dbname);
+        //Check if the connection succeeded, otherwise abort
+        if ($conn->connect_error) {
+            //An error occured, return FALSE for error handling
+            $errorMessage = "We're sorry, there was an error trying to establish a connection to our database. Please try again later.";
+            echo "ERROR";
+            return;
+        }
+
+        //Get row where username or email exists
+        $sql = "SELECT `tag`.`NAME` FROM `tag` INNER JOIN `image_tag` ON `tag`.`ID` = `image_tag`.`TAG_ID` WHERE `image_tag`.`IMAGE_ID` = ".$_GET["id"]."";
+
+        $result = $conn->query($sql);
+
+        while($row = $result->fetch_assoc()) {
+            echo $row["NAME"];
+        }
+    }
     
 function loadImage() {
     //DATABASE ACCESS VARIABLES - shouldn't be modified

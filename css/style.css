@@ -145,6 +145,7 @@ footer {
 .user_info_container {
     width: 100%;
     float: left;
+    box-sizing: border-box;
     padding: 15px;
     background-color: #333333;
 }

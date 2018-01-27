@@ -14,6 +14,7 @@ if(isset($_GET)) {
     $userID = 0;
     $orderBy = "`UPLOADED_ON` DESC";
     $private = "`PRIVATE` = 0";
+    $path = "";
     
     if(isset($_GET["user"]))
     {
@@ -52,12 +53,16 @@ if(isset($_GET)) {
         }
     }
     
-    loadAllImagesWith($userID, $orderBy, $private);
+    if(isset($_GET["path"]) && ($_GET["path"] == 2)) {
+        $path .= "../../";
+    }
+    
+    loadAllImagesWith($userID, $orderBy, $private, $path);
 }
 
 
 
-function loadAllImagesWith($userID, $orderBy, $private) {
+function loadAllImagesWith($userID, $orderBy, $private, $path) {
 
     $servername = "localhost";
     $username = "php_projekt";
@@ -87,9 +92,17 @@ function loadAllImagesWith($userID, $orderBy, $private) {
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
 
+                 if(isset($_GET["path"]) && ($_GET["path"] == 2)) {
+                
+                echo '<div class = "imagefield" onclick = "document.location.href=\'image.php?id='.$row["ID"].'\'">';
+                } else {
+                     
+                
                 echo '<div class = "imagefield" onclick = "document.location.href=\'php/views/image.php?id='.$row["ID"].'\'">';
-                echo '<img class="uploaded_image" src="'.$row["PATH"].'"/>';
-                echo '<div style="    text-align: center;">'.$row["NAME"].'</div>';
+                 }
+                
+                echo '<img class="uploaded_image" src="'.$path.$row["PATH"].'"/>';
+                echo '<div style="text-align: center;">'.$row["NAME"].'</div>';
                 echo '</div>';
 
             }

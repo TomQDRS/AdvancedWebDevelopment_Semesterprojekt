@@ -141,7 +141,7 @@
 
             var xmlhttp = new XMLHttpRequest();
 
-            var url = "postcomment.php";
+            var url = "../control/postcomment.php";
             var request = "";
 
             request += "user=" + "<?php if(isset($_SESSION["session_user_ID"])) {echo $_SESSION["session_user_ID"];} else {echo 0;} ?>";

@@ -3,11 +3,11 @@
 
 <?php 
     
-    include 'sessioncontrol.php';
+    include '../control/sessioncontrol.php';
     
     if(!isset($_GET["id"]) || !checkIfUserExists($_GET["id"])) {
         http_response_code(404);
-        include('404.php');
+        include('../error/404.php');
         die();   
     }
     //This needs to be called in every normal display page to check if the user is logged in
@@ -17,20 +17,22 @@
     
 <head>
     <title><?php getUserName(); ?> - toomanyimages</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
     
 
 <body>
-    <nav>
-            <button type="button" class="nav_button" id="upload_nav_button" onclick="document.location.href='uploadForm.php'" />
-        <button class="nav_button" id="search_nav_button"></button>
-        <img src="logos/imgup.png" alt="imgup logo" height="36" width="128" id="logo_nav_img" onclick="document.location.href='index.php'">
+       <nav>
+        <button type="button" class="nav_button" id="upload_nav_button" onclick="document.location.href='uploadForm.php'"></button>
+        <img src="../../logos/tmi_logo_text.png" alt="toomanyimages logo" height="36" width="101" id="logo_nav_img" onclick="document.location.href='../../index.php'">
         <button class="nav_button" id="login_nav_button" onclick="onLoginFormClick()"></button>
+        <div class="login_nav_content">
+            <?php getlinksindropdown();?>
+        </div>
     </nav>
     <section id="main">
         <div class="user_info_container">
-            <img id="user_profilepic" src="profile_images/standard/standard-150.png">
+            <img id="user_profilepic" src="../../profile_images/standard/standard-150.png">
             <div id="user_name"><?php getUserName(); ?> </div>
 			<br><br>
             <div id="user_registered_on">Registriert am: <?php getUserRegisteredOn(); ?></div>
@@ -45,7 +47,7 @@
         <div id="imagecontainer"></div>
     </section>
     <footer>    
-        <a href="impressum.html" class="footer_link">Impressum</a>
+        <a href="impressum.php" class="footer_link">Impressum</a>
     </footer>
 </body>
 
@@ -135,7 +137,21 @@ function getUserRegisteredOn() {
     while($row = $result->fetch_assoc()) {
         echo $row["REGISTERED_ON"];
     }
-}            
+}         
+    
+    
+function getlinksindropdown() {
+    
+    if(isset($_SESSION["session_user_ID"]) && !empty($_SESSION["session_user_ID"])) {
+        echo '<a href="user.php?id='.$_SESSION["session_user_ID"].'">Profil</a>';
+        echo '<a href="../control/logout.php">Ausloggen</a>';
+    } else {
+
+
+     echo '<a href="loginForm.php">Einloggen</a><a href="registrationForm.php">Registrieren</a>';
+    }
+}
+
             
 ?>
     
@@ -155,7 +171,7 @@ function getUserRegisteredOn() {
             document.getElementById("imagecontainer").innerHTML = this.responseText;
         }
         
-        var request = "loadImages.php?";
+        var request = "../control/loadImages.php?";
         
         var userID = <?php echo $_GET["id"]?>;
         request += "user=" + userID;
@@ -178,10 +194,28 @@ function getUserRegisteredOn() {
         
         request += "&order=" + orderValue;
                 
+        request += "&path=" + "2";
+        
         xmlhttp.open("GET", request, true);
         xmlhttp.send();
     }
 
+    
+       function onLoginFormClick() {
+
+        var sessionValue = <?php      
+            if(isset($_SESSION["session_user_ID"]) && $_SESSION["session_user_ID"] != null) {
+                echo $_SESSION["session_user_ID"];
+            } else {
+                echo 0;
+            } ?>;
+        //alert(sessionValue);
+        if (sessionValue == 0) {
+            document.location.href = 'loginform.php'
+        } else {
+            document.location.href = 'user.php?id=' + sessionValue;
+        }
+    }
     
 </script>
     

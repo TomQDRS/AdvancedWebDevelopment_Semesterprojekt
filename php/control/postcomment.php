@@ -43,7 +43,7 @@ if(isset($_POST) & !empty($_POST)) {
     }
     //Close connection
     $conn->close();
-        header("Location:index.php");
+        header("Location:../../index.php");
     
 }
 

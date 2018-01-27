@@ -3,15 +3,15 @@
 
 <?php
     //This needs to be called in every normal display page to check if the user is logged i
-    include 'sessioncontrol.php';
+    include '../control/sessioncontrol.php';
 
     
     if(!isset($_GET["id"]) || !checkIfImageExists($_GET["id"])) {
         http_response_code(404);
-        include('404.php');
+        include('../error/404.php');
         die();   
     } else if (!checkIfImageMayBeViewed($_GET["id"])) {
-        include('404.php');
+        include('../error/404.php');
         echo "Sorry, you don't have permission to view this image.";
         die();
     }
@@ -20,44 +20,48 @@
     <head>
         <title>
             <?php getImageName(); ?> - toomanyimages</title>
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="../../css/style.css">
     </head>
 
     <body>
         <nav>
-            <button type="button" class="nav_button" id="upload_nav_button" onclick="document.location.href='uploadForm.php'" />
-            <button class="nav_button" id="search_nav_button"></button>
-            <img src="logos/imgup.png" alt="imgup logo" height="36" width="128" id="logo_nav_img" onclick="document.location.href='index.php'">
+            <button type="button" class="nav_button" id="upload_nav_button" onclick="document.location.href='uploadForm.php'"></button>
+            <img src="../../logos/tmi_logo_text.png" alt="toomanyimages logo" height="36" width="101" id="logo_nav_img" onclick="document.location.href='../../index.php'">
             <button class="nav_button" id="login_nav_button" onclick="onLoginFormClick()"></button>
+            <div class="login_nav_content">
+                <?php getlinksindropdown();?>
+            </div>
         </nav>
         <section id="main">
-                <div id=image_details>
-                    
-                                    <div id="image_detail_view"><img src="<?php loadImage(); ?>"></div>
+            <div id=image_details>
 
-                    
-                    <div id="image_detail_name">
-                        <?php getImageName(); ?>
+                <div id="image_detail_view"><img src="../../<?php loadImage(); ?>"></div>
+
+
+                <div id="image_detail_name">
+                    <?php getImageName(); ?>
+                </div>
+                <div id="image_detail_description">
+                    <?php getImageDescription(); ?>
+                </div>
+                <div id="image_detail_meta">
+                    <div id="user_for_image">Hochgeladen von:
+                        <?php getUserForImage(); ?>
                     </div>
-                    <div id="image_detail_description">
-                        <?php getImageDescription(); ?>
+                    <div id="image_uploaded_on">Hochgeladen am:
+                        <?php getImageUploadedOn(); ?>
                     </div>
-                    <div id="image_detail_meta">
-                        <div id="user_for_image">Hochgeladen von:
-                            <?php getUserForImage(); ?>
-                        </div>
-                        <div id="image_uploaded_on">Hochgeladen am:
-                            <?php getImageUploadedOn(); ?>
-                        </div>
-                        <br>
-                        <div class="tagarea">
-                            <div id="tagdisplay"><?php getTagsForImage();?></div>
+                    <br>
+                    <div class="tagarea">
+                        <div id="tagdisplay">
+                            <?php getTagsForImage();?>
                         </div>
                     </div>
-                </div>   
-                    <button onclick="toggleTagInput()">Tags ändern</button>
-                    <input id="tag_input_field" style="display:none;" onkeyup="checkfortaginput(this)" type="text" placeholder="Tag erstellen oder suchen...">
-                    <div id="livesearch"></div>
+                </div>
+            </div>
+            <button onclick="toggleTagInput()">Tags ändern</button>
+            <input id="tag_input_field" style="display:none;" onkeyup="checkfortaginput(this)" type="text" placeholder="Tag erstellen oder suchen...">
+            <div id="livesearch"></div>
             <br>
 
             <div class="commentarea">
@@ -71,30 +75,32 @@
             </div>
         </section>
         <footer>
-            <a href="impressum.html" class="footer_link">Impressum</a>
+            <a href="impressum.php" class="footer_link">Impressum</a>
         </footer>
     </body>
 
     <script type="text/javascript">
-        
-        window.onload = function () {
-            
-           if(<?php if(isset($_SESSION["session_user_ID"]) && !empty($_SESSION["session_user_ID"])) {
-                echo false; 
+        window.onload = function() {
+
+            if (<?php if(isset($_SESSION["session_user_ID"]) && !empty($_SESSION["session_user_ID"])) {
+                echo "false"; 
             } else {
-                echo true;
+                echo "true";
             }
-              ?>)     {
-               var comminp = document.getElementById("commentinputfield");
-            var buttonComment = document.getElementById("sendcommentbutton");
-            
-            buttonComment.disabled = true;
-            comminp.contentEditable = false;
-            comminp.innerHTML = "Bitte melde Dich an, um einen Kommentar zu schreiben.";
-               
-               }
-            
+              ?>) {
+                var comminp = document.getElementById("commentinputfield");
+                var buttonComment = document.getElementById("sendcommentbutton");
+
+                buttonComment.disabled = true;
+                buttonComment.style.display = "none";
+                comminp.contentEditable = false;
+                comminp.innerHTML = "Bitte <a href='loginForm.php'>melde dich an</a> oder <a href='registrationForm.php'>registriere dich</a>, um einen Kommentar zu schreiben.";
+                comminp.style.border = "none";
+                comminp.style.marginBottom = "0px";
+            }
+
         }
+
         function toggleTagInput() {
 
             var x = document.getElementById("tag_input_field");
@@ -108,6 +114,22 @@
         function addtag(tag) {
 
 
+        }
+
+        function onLoginFormClick() {
+
+            var sessionValue = <?php      
+            if(isset($_SESSION["session_user_ID"]) && $_SESSION["session_user_ID"] != null) {
+                echo $_SESSION["session_user_ID"];
+            } else {
+                echo 0;
+            } ?>;
+            //alert(sessionValue);
+            if (sessionValue == 0) {
+                document.location.href = 'loginform.php'
+            } else {
+                document.location.href = 'user.php?id=' + sessionValue;
+            }
         }
 
         function postComment(comment) {
@@ -268,7 +290,7 @@
         $result = $conn->query($sql);
         
         while($row = $result->fetch_assoc()) {
-            echo "<a href='index.php?tag=".$row["ID"]."'>";
+            echo "<a href='../../index.php?tag=".$row["ID"]."'>";
             echo "#".$row["NAME"];
             echo "</a>";
         }
@@ -499,7 +521,7 @@ function getCommentsForImage() {
         
         echo "<div class = 'comment'>"
             ."<div class = 'comment_userinfo'>"
-            ."<img src='profile_images/standard/standard-150.png'>"
+            ."<img src='../../profile_images/standard/standard-150.png'>"
             ."<a href='user.php?id=".$row["ID"]."'>".$row["USERNAME"]."</a>"
               ."<div>".$date[0]."</div>"
             ."</div>"
@@ -508,6 +530,22 @@ function getCommentsForImage() {
         
     }
 }
+    
+    
+function getlinksindropdown() {
+    
+    if(isset($_SESSION["session_user_ID"]) && !empty($_SESSION["session_user_ID"])) {
+        echo '<a href="user.php?id='.$_SESSION["session_user_ID"].'">Profil</a>';
+        echo '<a href="logout.php">Ausloggen</a>';
+    } else {
+
+
+     echo '<a href="loginForm.php">Einloggen</a><a href="registrationForm.php">Registrieren</a>';
+    }
+}
+
+    
+    
             
 ?>
 

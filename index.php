@@ -3,7 +3,7 @@
 
 <?php 
     //This needs to be called in every normal display page to check if the user is logged in
-    include 'sessioncontrol.php';
+    include 'php/control/sessioncontrol.php';
     //DEBUG: REMOVE ON RELEASE
     //print_r($_SESSION);
 ?>
@@ -15,7 +15,7 @@
 
 <body>
     <nav>
-        <button type="button" class="nav_button" id="upload_nav_button" onclick="document.location.href='uploadForm.php'" />
+        <button type="button" class="nav_button" id="upload_nav_button" onclick="document.location.href='php/views/uploadForm.php'" />
         <button class="nav_button" id="search_nav_button"></button>
         <img src="logos/tmi_logo_text.png" alt="toomanyimages logo" height="36" width="101" id="logo_nav_img" onclick="document.location.href='index.php'">
         <button class="nav_button" id="login_nav_button" onclick="onLoginFormClick()"></button>
@@ -36,7 +36,7 @@
         <div id="imagecontainer"></div>
     </section>
     <footer>
-        <a href="impressum.html" class="footer_link">Impressum</a>
+        <a href="php/views/impressum.php" class="footer_link">Impressum</a>
     </footer>
 </body>
 
@@ -55,7 +55,7 @@
             document.getElementById("imagecontainer").innerHTML = this.responseText;
         }
 
-        var request = "loadImages.php?";
+        var request = "php/control/loadImages.php?";
 
         request += "user=0";
 
@@ -79,12 +79,11 @@
             } ?>;
         //alert(sessionValue);
         if (sessionValue == 0) {
-            document.location.href = 'loginform.php'
+            document.location.href = 'php/views/loginform.php'
         } else {
-            document.location.href = 'user.php?id=' + sessionValue;
+            document.location.href = 'php/views/user.php?id=' + sessionValue;
         }
     }
-    
 
 </script>
 

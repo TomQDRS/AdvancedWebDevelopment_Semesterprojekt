@@ -470,3 +470,77 @@ select {
 #tagdisplay {
     height: auto;
 }
+
+#formcontainer {
+        background-color: #2b2b2b;
+    padding-top: 8px;
+    padding-bottom: 16px;
+    border-radius: 8px;
+    width: 50%;
+    margin: auto;
+    display: block;
+    text-align: center;
+    margin-top: 84px;
+    font-size: 10pt;
+
+}
+
+#formcontainer * {
+    background-color: transparent;
+        color: darkgray;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #2b2b2b inset;
+    -webkit-text-fill-color: white !important;
+}
+
+.formtextinput {
+    text-align: left;
+       width: 95%;
+    border: none;
+    border-bottom: 1px solid;
+    border-bottom-color: darkgray;
+    font-size: 14pt;
+    display: block;
+    overflow: hidden;
+    resize: none;
+    word-break:normal;
+    padding-bottom: 6px;
+    box-sizing: border-box;
+    padding: 12px 20px;
+    margin: auto;
+    margin-bottom: 4px;
+    margin-top: 8px;
+}
+
+.formcheckboxcontainer {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-size: 12pt;
+}
+
+#formcontainer .formcheckboxcontainer {
+        color: white;
+}
+
+.formcheckbox {
+    vertical-align: middle;
+    height: 16px;
+    width: 16px;
+}
+
+.formsubmit {
+    border: 2px solid #fbb040;
+    font-weight:700; 
+    font-size: 12pt;
+    border-radius: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+}
+#formcontainer .formsubmit {
+    color: white;
+}

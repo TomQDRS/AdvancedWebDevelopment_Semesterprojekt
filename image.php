@@ -49,7 +49,7 @@
                         </div>
                         <br>
                         <div class="tagarea">
-                            <div id="tagdisplay">Tags: <?php getTagsForImage();?></div>
+                            <div id="tagdisplay"><?php getTagsForImage();?></div>
                         </div>
                     </div>
                 </div>   
@@ -243,12 +243,14 @@
         }
 
         //Get row where username or email exists
-        $sql = "SELECT `tag`.`NAME` FROM `tag` INNER JOIN `image_tag` ON `tag`.`ID` = `image_tag`.`TAG_ID` WHERE `image_tag`.`IMAGE_ID` = ".$_GET["id"]."";
+        $sql = "SELECT `tag`.`NAME`, `tag`.`ID` FROM `tag` INNER JOIN `image_tag` ON `tag`.`ID` = `image_tag`.`TAG_ID` WHERE `image_tag`.`IMAGE_ID` = ".$_GET["id"]."";
 
         $result = $conn->query($sql);
-
+        
         while($row = $result->fetch_assoc()) {
-            echo $row["NAME"];
+            echo "<a href='index.php?tag=".$row["ID"]."'>";
+            echo "#".$row["NAME"];
+            echo "</a>";
         }
     }
     

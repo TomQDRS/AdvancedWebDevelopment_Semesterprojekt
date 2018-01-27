@@ -462,5 +462,10 @@ select {
 }
 
 .tagarea {
+    margin-top: 4px;
     float:left;
+}
+
+#tagdisplay {
+    height: auto;
 }

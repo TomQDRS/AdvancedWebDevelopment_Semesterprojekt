@@ -23,7 +23,7 @@ if(isset($_POST["submit"])) {
         //TODO: Maybe place a success message to return a value either way?
         //TODO: Return to the actual site without header
         /*return;*/
-        header("Location:index.php");
+        header("Location:../../index.php");
     } else {
         //Return the error message to be displayed in the original form
         //TODO: Return the error instead of echoing it
@@ -81,7 +81,7 @@ function uploadImage() {
     //Generate target filename
     $target_file = $target_dir.generateRandomString(mt_rand(5,10)).".".$imageFileType;
     //Check if filename exists, if so, generate a new one
-    while(file_exists($target_file)) {
+    while(file_exists("../../".$target_file)) {
         $target_file = $target_dir.generateRandomString(mt_rand(5,10)).".".$imageFileType;
     }
     
@@ -95,7 +95,7 @@ function uploadImage() {
     }
 
     //Move the uploaded file from the temp location to its target destination
-    if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], $target_file)) {
+    if (move_uploaded_file($_FILES["imageToUpload"]["tmp_name"], "../../".$target_file)) {
         /*echo "The file ". basename( $_FILES["imageToUpload"]["name"]). " has been uploaded.";*/
         //Check the checkbox for whether the user wants the image to be private or public
         if(isset($_POST['img_private']) && $_POST['img_private'] == 'private') {
@@ -108,7 +108,7 @@ function uploadImage() {
             return TRUE;
         } else {
             //Delete file if database connection fails to prevent errors and dead files
-            unlink($target_file);
+            unlink("../../".$target_file);
             //There was an error in the database add process, output an error message
             return FALSE;
         }

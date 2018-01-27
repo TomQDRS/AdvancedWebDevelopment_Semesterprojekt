@@ -31,9 +31,11 @@
             <button class="nav_button" id="login_nav_button" onclick="onLoginFormClick()"></button>
         </nav>
         <section id="main">
-            <div id="image_detail_container">
-                <div id="image_detail_view"><img src="<?php loadImage(); ?>"></div>
                 <div id=image_details>
+                    
+                                    <div id="image_detail_view"><img src="<?php loadImage(); ?>"></div>
+
+                    
                     <div id="image_detail_name">
                         <?php getImageName(); ?>
                     </div>
@@ -56,7 +58,6 @@
                     <button onclick="toggleTagInput()">Tags ändern</button>
                     <input id="tag_input_field" style="display:none;" onkeyup="checkfortaginput(this)" type="text" placeholder="Tag erstellen oder suchen...">
                     <div id="livesearch"></div>
-                </div>
             <br>
 
             <div class="commentarea">
@@ -75,6 +76,25 @@
     </body>
 
     <script type="text/javascript">
+        
+        window.onload = function () {
+            
+           if(<?php if(isset($_SESSION["session_user_ID"]) && !empty($_SESSION["session_user_ID"])) {
+                echo false; 
+            } else {
+                echo true;
+            }
+              ?>)     {
+               var comminp = document.getElementById("commentinputfield");
+            var buttonComment = document.getElementById("sendcommentbutton");
+            
+            buttonComment.disabled = true;
+            comminp.contentEditable = false;
+            comminp.innerHTML = "Bitte melde Dich an, um einen Kommentar zu schreiben.";
+               
+               }
+            
+        }
         function toggleTagInput() {
 
             var x = document.getElementById("tag_input_field");
@@ -102,7 +122,7 @@
             var url = "postcomment.php";
             var request = "";
 
-            request += "user=" + "<?php echo $_SESSION["session_user_ID"]; ?>";
+            request += "user=" + "<?php if(isset($_SESSION["session_user_ID"])) {echo $_SESSION["session_user_ID"];} else {echo 0;} ?>";
             request += "&image=" + "<?php echo $_GET["id"];?>";
             request += "&comment=" + encodeURIComponent(comment);
 
@@ -414,12 +434,14 @@ function getUserForImage() {
     }
     
     //Get row where username or email exists
-    $sql = "SELECT `user`.`USERNAME` FROM `user` INNER JOIN `image` ON `image`.`IMG_USER_ID` = `user`.`ID` WHERE `image`.`ID` = '".$_GET["id"]."'";
+    $sql = "SELECT `user`.`USERNAME`, `user`.`ID` FROM `user` INNER JOIN `image` ON `image`.`IMG_USER_ID` = `user`.`ID` WHERE `image`.`ID` = '".$_GET["id"]."'";
     
     $result = $conn->query($sql);
     
     while($row = $result->fetch_assoc()) {
+        echo "<a href='user.php?id=".$row["ID"]."'>";
         echo $row["USERNAME"];
+        echo "</a>";
     }
 }
                    

@@ -403,11 +403,12 @@ select {
 }
 
 #image_detail_view {
-    max-width: 50%;
+    max-width: 84%;
     height: auto;
     margin: auto;
-    margin-top: 86px;
     display: block;
+    margin-bottom: 16px;
+    margin-top: 16px;
     
 }
 
@@ -420,11 +421,11 @@ select {
         
     width: 50%;
     margin: auto;
-    margin-top: 24px;
     display: block;
     background-color: #2b2b2b;
     padding: 14px;
     margin-bottom: 58px;
+    margin-top: 68px;
     overflow: auto;
     text-align: center;
         border-radius: 8px;

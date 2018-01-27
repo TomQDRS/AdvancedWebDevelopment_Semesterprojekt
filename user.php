@@ -160,8 +160,14 @@ function getUserRegisteredOn() {
         var userID = <?php echo $_GET["id"]?>;
         request += "user=" + userID;
         
+        var sessionID =   <?php if(isset($_SESSION["session_user_ID"]) && !empty($_SESSION["session_user_ID"])) {
+        echo $_SESSION["session_user_ID"];
+    } else {
+     echo '0';
+    }?>;
+        
         var private = "public";
-        if(userID == <?php echo $_SESSION["session_user_ID"]?>) {
+        if(userID == sessionID) {
            private = "both";
         }
 

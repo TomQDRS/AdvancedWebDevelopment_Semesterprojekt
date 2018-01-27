@@ -25,7 +25,7 @@ if(isset($_POST["submit"])) {
         //TODO: Return to the actual site without header
         //TODO: CREATE SESSION
         /*return;*/
-        header("Location:loginForm.php");
+        header("Location:../views/loginForm.php");
     } else {
         //Return the error message to be displayed in the original form
         //TODO: Return the error instead of echoing it

@@ -20,7 +20,7 @@ if(isset($_POST["submit"])) {
     if(loginUser()) {
         //Return with session active
         //TODO: Maybe place a success message to return a value either way?
-        header("Location:index.php");
+        header("Location:../../index.php");
     } else {
         //Return the error message to be displayed in the original form
         //TODO: Return the error instead of echoing it

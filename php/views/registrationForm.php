@@ -3,18 +3,24 @@
 
 <head>
     <title>toomanyimages - register</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body>
-    <section id="registerContainer">
-        <form id="registrationForm" action="registerUser.php" method="post">
-            <input name="usr_name" type="text" placeholder="Nutzername" oninput="checkForValidUsername(this)" required>Nutzername<br>
-            <input name="usr_mail" type="email" placeholder="Email" required>E-Mail<br>
-            <input name="usr_password" type="password" id="firstPassword" oninput="checkForValidPassword(this)" required>Passwort<br>
-            <input name="usr_password_confirm" type="password" id="password_confirm" oninput="checkForPasswordMatch(this)" required>Passwort Wiederholen<br>
-            <input name="submit" type="submit" value="submit">
+    
+    <nav>
+        <img src="../../logos/tmi_logo_text.png" alt="toomanyimages logo" height="36" width="101" id="logo_nav_img" onclick="document.location.href='../../index.php'">
+    </nav>
+    
+    <section id="formcontainer">
+        <form id="registrationForm" action="../control/registerUser.php" method="post">
+            <input class="formtextinput" name="usr_name" type="text" placeholder="Nutzername" oninput="checkForValidUsername(this)" required>Nutzername<br>
+            <input class="formtextinput" name="usr_mail" type="email" placeholder="Email" required>E-Mail<br>
+            <input class="formtextinput" name="usr_password" type="password" id="firstPassword" oninput="checkForValidPassword(this)" placeholder="Passwort" required>Passwort<br>
+            <input class="formtextinput" name="usr_password_confirm" type="password" id="password_confirm" oninput="checkForPasswordMatch(this)" placeholder="Passwort"required>Passwort Wiederholen<br>
+            <input class="formsubmit" name="submit" type="submit" value="Registrieren">
         </form>
+        Du hast schon ein Profil? <a href="loginForm.php">Hier Einloggen!</a>
     </section>
 </body>
 

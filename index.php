@@ -92,12 +92,10 @@
 function getlinksindropdown() {
     
     if(isset($_SESSION["session_user_ID"]) && !empty($_SESSION["session_user_ID"])) {
-        echo '<a href="user.php?id='.$_SESSION["session_user_ID"].'">Profil</a>';
-        echo '<a href="logout.php">Ausloggen</a>';
+        echo '<a href="php/views/user.php?id='.$_SESSION["session_user_ID"].'">Profil</a>';
+        echo '<a href="php/control/logout.php">Ausloggen</a>';
     } else {
-
-
-     echo '<a href="loginForm.php">Einloggen</a><a href="registrationForm.php">Registrieren</a>';
+     echo '<a href="php/views/loginForm.php">Einloggen</a><a href="php/views/registrationForm.php">Registrieren</a>';
     }
 }
 

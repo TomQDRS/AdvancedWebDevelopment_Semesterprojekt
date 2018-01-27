@@ -95,8 +95,9 @@ nav {
 }
 
 [contenteditable=true]:empty:before {
-  content: attr(placeholder);
-  display: block; /* For Firefox */
+    content: attr(placeholder);
+    display: block;
+    /* For Firefox */
     color: darkgray;
 }
 
@@ -327,7 +328,7 @@ select {
     float: left;
     display: block;
     text-align: center;
-    width = 25%;
+    width=25%;
     margin-right: 14px;
 }
 
@@ -353,14 +354,14 @@ select {
 }
 
 .comment span {
-    float:left;
+    float: left;
     width: 75%;
     word-wrap: break-word;
 }
 
 #commentinput {
 
-    
+
     width: 50%;
     margin: auto;
     display: block;
@@ -369,20 +370,20 @@ select {
     margin-bottom: 58px;
     overflow: auto;
     text-align: center;
-        border-radius: 8px;
+    border-radius: 8px;
 
 }
 
 
 #commentinput * {
-    
+
     background-color: transparent;
 
 }
 
 #commentinputfield {
     text-align: left;
-       width: 95%;
+    width: 95%;
     margin: auto;
     margin-bottom: 14px;
     border: none;
@@ -392,13 +393,13 @@ select {
     display: block;
     overflow: hidden;
     resize: none;
-    word-break:normal;
+    word-break: normal;
     padding-bottom: 6px;
-    
+
 }
 
 #commentinputfield:focus {
-    
+
     outline: none;
 }
 
@@ -409,7 +410,7 @@ select {
     display: block;
     margin-bottom: 16px;
     margin-top: 16px;
-    
+
 }
 
 #image_detail_view img {
@@ -418,7 +419,7 @@ select {
 
 
 #image_details {
-        
+
     width: 50%;
     margin: auto;
     display: block;
@@ -428,9 +429,10 @@ select {
     margin-top: 68px;
     overflow: auto;
     text-align: center;
-        border-radius: 8px;
+    border-radius: 8px;
 
 }
+
 #image_details * {
     background-color: transparent;
 }
@@ -448,31 +450,33 @@ select {
 }
 
 #image_detail_meta {
-    
+
     padding-top: 4px;
     border-top: solid 1px white;
     font-size: 10pt;
 }
 
 #user_for_image {
-    float:left;
+    float: left;
 }
 
 #image_uploaded_on {
-    float:right;
+    float: right;
 }
 
 .tagarea {
     margin-top: 4px;
-    float:left;
+    float: left;
 }
 
 #tagdisplay {
     height: auto;
 }
 
+
+
 #formcontainer {
-        background-color: #2b2b2b;
+    background-color: #2b2b2b;
     padding-top: 8px;
     padding-bottom: 16px;
     border-radius: 8px;
@@ -485,9 +489,37 @@ select {
 
 }
 
+@media only screen and (min-width: 0px) {
+   #formcontainer {
+       
+           width: 75%;
+
+    }
+}
+
+@media only screen and (min-width: 860px) {
+       #formcontainer {
+       
+           width: 50%;
+
+    }
+}
+
+@media only screen and (min-width: 1420px) {
+       #formcontainer {
+       
+           width: 40%;
+
+    }
+}
+
+* #formcontainer {
+    color: darkgray;
+}
+
 #formcontainer * {
     background-color: transparent;
-        color: darkgray;
+    color: darkgray;
 }
 
 input:-webkit-autofill {
@@ -495,9 +527,10 @@ input:-webkit-autofill {
     -webkit-text-fill-color: white !important;
 }
 
-.formtextinput {
+#formcontainer .formtextinput {
+    color: white;
     text-align: left;
-       width: 95%;
+    width: 95%;
     border: none;
     border-bottom: 1px solid;
     border-bottom-color: darkgray;
@@ -505,7 +538,7 @@ input:-webkit-autofill {
     display: block;
     overflow: hidden;
     resize: none;
-    word-break:normal;
+    word-break: normal;
     padding-bottom: 6px;
     box-sizing: border-box;
     padding: 12px 20px;
@@ -514,15 +547,12 @@ input:-webkit-autofill {
     margin-top: 8px;
 }
 
-.formcheckboxcontainer {
+#formcontainer .formcheckboxcontainer {
     margin-top: 16px;
-    margin-bottom: 16px;
     font-size: 12pt;
+    color: white;
 }
 
-#formcontainer .formcheckboxcontainer {
-        color: white;
-}
 
 .formcheckbox {
     vertical-align: middle;
@@ -530,17 +560,16 @@ input:-webkit-autofill {
     width: 16px;
 }
 
-.formsubmit {
+#formcontainer .formsubmit {
+    margin-top: 16px;
+    margin-bottom: 16px;
     border: 2px solid #fbb040;
-    font-weight:700; 
+    font-weight: 700;
     font-size: 12pt;
     border-radius: 8px;
     padding-left: 16px;
     padding-right: 16px;
     padding-top: 8px;
     padding-bottom: 8px;
-
-}
-#formcontainer .formsubmit {
     color: white;
 }

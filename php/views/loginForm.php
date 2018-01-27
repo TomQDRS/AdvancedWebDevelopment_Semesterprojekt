@@ -19,6 +19,7 @@
             <input class="formcheckbox" name="usr_rememberme" type="checkbox" value="rememberme">Eingeloggt bleiben</div>
             <input class="formsubmit"name="submit" type="submit" value="Einloggen">
         </form>
+        Du hast noch kein Profil? <a href="registrationForm.php">Hier Registrieren!</a>
     </section>
 </body>
 

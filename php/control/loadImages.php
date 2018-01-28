@@ -99,18 +99,16 @@ function loadAllImagesWith($userID, $orderBy, $private, $path, $search) {
 
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
+                
+                echo '<div class = "imagefield">';
 
                  if(isset($_GET["path"]) && ($_GET["path"] == 2)) {
-                
-                echo '<div class = "imagefield" onclick = "document.location.href=\'image.php?id='.$row["ID"].'\'">';
-                } else {
-                     
-                
-                echo '<div class = "imagefield" onclick = "document.location.href=\'php/views/image.php?id='.$row["ID"].'\'">';
+                     echo '<img class="uploaded_image" "document.location.href=\'image.php?id='.$row["ID"].'\'" src="'.$path.$row["PATH"].'"/>';
+                } else { 
+                    echo '<img class="uploaded_image" onclick = "document.location.href=\'php/views/image.php?id='.$row["ID"].'\'" src="'.$path.$row["PATH"].'"/>';
                  }
                 
-                echo '<img class="uploaded_image" src="'.$path.$row["PATH"].'"/>';
-                echo '<div style="text-align: center;">'.$row["NAME"].'</div>';
+                echo '<div class="imagename" style="text-align: center;">'.$row["NAME"].'</div>';
                 echo '</div>';
 
             }

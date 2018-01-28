@@ -4,6 +4,8 @@
 <head>
     <title>toomanyimages - login</title>
     <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="../../logos/favicon.png" type="image/ico">
+
 </head>
 
 <body>

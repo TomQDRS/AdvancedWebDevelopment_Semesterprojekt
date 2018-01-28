@@ -127,6 +127,11 @@ footer {
     margin-top: 48px;
 }
 
+.imagename {
+    font-weight: 500;
+    margin-top: 4px;    
+}
+
 .minibar {
     width: 100%;
     float: left;
@@ -245,7 +250,7 @@ footer {
     display: block;
     margin: auto;
 
-    max-width: 100%;
+    max-width: 94%;
     max-height: 200px;
 }
 

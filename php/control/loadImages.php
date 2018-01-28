@@ -12,9 +12,10 @@
 if(isset($_GET)) {
     
     $userID = 0;
-    $orderBy = "`UPLOADED_ON` DESC";
-    $private = "`PRIVATE` = 0";
+    $orderBy = "`image`.`UPLOADED_ON` DESC";
+    $private = "`image`.`PRIVATE` = 0";
     $path = "";
+    $search = "";
     
     if(isset($_GET["user"]))
     {
@@ -25,16 +26,16 @@ if(isset($_GET)) {
     {
         switch($_GET["order"]) {
             case "recent":
-                $orderBy = "`UPLOADED_ON` DESC";
+                $orderBy = "`image`.`UPLOADED_ON` DESC";
                 break;
             case "oldest":
-                $orderBy = "`UPLOADED_ON` ASC";
+                $orderBy = "`image`.`UPLOADED_ON` ASC";
                 break;
             case "name_asce":
-                $orderBy = "`NAME` ASC";
+                $orderBy = "`image`.`NAME` ASC";
                 break;
             case "name_desc":
-                $orderBy = "`NAME` DESC";
+                $orderBy = "`image`.`NAME` DESC";
                 break;
         }
     }
@@ -42,27 +43,31 @@ if(isset($_GET)) {
     if(isset($_GET["private"])) {
         switch($_GET["private"]) {
             case "public":
-                $private = "`PRIVATE` = 0";
+                $private = "`image`.`PRIVATE` = 0";
                 break;
             case "private":
-                $private = "`PRIVATE` = 1";
+                $private = "`image`.`PRIVATE` = 1";
                 break;
             case "both":
-                $private = "(`PRIVATE` = 0 OR `PRIVATE` = 1)";
+                $private = "(`image`.`PRIVATE` = 0 OR `image`.`PRIVATE` = 1)";
                 break;
         }
+    }
+    
+    if(isset($_GET["search"])) {
+        $search = $_GET["search"];
     }
     
     if(isset($_GET["path"]) && ($_GET["path"] == 2)) {
         $path .= "../../";
     }
     
-    loadAllImagesWith($userID, $orderBy, $private, $path);
+    loadAllImagesWith($userID, $orderBy, $private, $path, $search);
 }
 
 
 
-function loadAllImagesWith($userID, $orderBy, $private, $path) {
+function loadAllImagesWith($userID, $orderBy, $private, $path, $search) {
 
     $servername = "localhost";
     $username = "php_projekt";
@@ -80,10 +85,13 @@ function loadAllImagesWith($userID, $orderBy, $private, $path) {
 
         //SELECT all public images, ordered by upload date
         //TODO: Change SQL statement based on applied filters
-        $sql = "SELECT * FROM `image` ";
+        $sql = "SELECT DISTINCT `image`.`PATH`, `image`.`NAME`, `image`.`ID` FROM `image` LEFT JOIN `image_tag` ON `image`.`ID` = `image_tag`.`IMAGE_ID` LEFT JOIN `tag` ON `image_tag`.`TAG_ID` = `tag`.`ID` ";
         $sql .= "WHERE ".$private." ";
         if($userID != 0) {
-            $sql .= "AND `IMG_USER_ID` = ".$userID." ";
+            $sql .= "AND `image`.`IMG_USER_ID` = ".$userID." ";
+        }
+        if($search != "") {
+            $sql .= " AND (`image`.`NAME` LIKE '%".$search."%' OR `image`.`DESCRIPTION` LIKE '%".$search."%' OR `tag`.`NAME` LIKE '%".$search."%') ";
         }
         $sql .= "ORDER BY ".$orderBy;
         

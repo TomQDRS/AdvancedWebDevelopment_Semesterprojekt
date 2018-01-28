@@ -37,7 +37,7 @@
 			<br><br>
             <div id="user_registered_on">Registriert am: <?php getUserRegisteredOn(); ?></div>
         </div>
-        <div class="minibar"><div>Bilder dieses Nutzers:</div>  Sortieren nach:
+        <div class="minibar">Sortieren nach:
             <select id="orderBy" onchange="reloadImages()">
                 <option value="recent">Neueste zuerst</option>
                 <option value="oldest">Älteste zuerst</option>

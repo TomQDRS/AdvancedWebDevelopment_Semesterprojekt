@@ -20,7 +20,7 @@ include '../control/sessioncontrol.php';
         </div>
     </nav>
 
-    <section id="formcontainer">
+    <section class="formcontainer">
 
         <form id="imageUploadForm" action="../control/imageUpload.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
 

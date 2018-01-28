@@ -34,10 +34,7 @@
         </nav>
         <section id="main">
             <div id=image_details>
-
                 <div id="image_detail_view"><img src="../../<?php loadImage(); ?>"></div>
-
-
                 <div id="image_detail_name">
                     <?php getImageName(); ?>
                 </div>
@@ -45,32 +42,33 @@
                     <?php getImageDescription(); ?>
                 </div>
                 <div id="image_detail_meta">
-                    <div id="user_for_image">Hochgeladen von:
+                    <div id="user_for_image">
                         <?php getUserForImage(); ?>
                     </div>
-                    <div id="image_uploaded_on">Hochgeladen am:
+                    <div id="image_uploaded_on">
                         <?php getImageUploadedOn(); ?>
                     </div>
-                    <br>
                     <div class="tagarea">
                         <div id="tagdisplay">
                             <?php getTagsForImage();?>
-                        </div>
+                        </div>       
+                    <div id="taginputdiv"> 
+                    <input id="tag_input_field" style="display:none;" onkeyup="checkfortaginput(this)" type="text" placeholder="Tag erstellen oder suchen..."> 
+                    <div id="livesearch"></div>
+                    </div>
+                    <button onclick="toggleTagInput()" style="display:none;"id="tagbutton"><img src="../../icons/ic_edit_24.png"></button>
+
+                
                     </div>
                 </div>
             </div>
-            <button onclick="toggleTagInput()">Tags ändern</button>
-            <input id="tag_input_field" style="display:none;" onkeyup="checkfortaginput(this)" type="text" placeholder="Tag erstellen oder suchen...">
-            <div id="livesearch"></div>
-            <br>
-
             <div class="commentarea">
                 <?php getCommentsForImage(); ?>
                 <div id="commentinput">
                     <!--<input id="commentinputfield" type="text" name="comment" placeholder="Kommentar schreiben...">-->
                     <!--<textarea name="comment" id="commentinputfield" placeholder="Kommentar schreiben..."></textarea>-->
                     <span contenteditable="true" id="commentinputfield" name="comment" placeholder="Kommentar schreiben..."></span>
-                    <button id="sendcommentbutton" onclick="validatecomment();" value="Kommentieren">Kommentieren</button>
+                    <button id="sendcommentbutton" class="formsubmit" onclick="validatecomment();" value="Kommentieren">Kommentieren</button>
                 </div>
             </div>
         </section>
@@ -99,6 +97,10 @@
                 comminp.style.marginBottom = "0px";
             }
 
+            if(<?php checkIfTagsMayBeEdited() ?>) {
+                    document.getElementById("tagbutton").style.display = "block";
+               }
+        
         }
 
         function toggleTagInput() {
@@ -111,11 +113,7 @@
             }
         }
 
-        function addtag(tag) {
-
-
-        }
-
+     
         function onLoginFormClick() {
 
             var sessionValue = <?php      
@@ -136,9 +134,6 @@
 
             document.getElementById("sendcommentbutton").disabled = true;
 
-
-            console.log("got there");
-
             var xmlhttp = new XMLHttpRequest();
 
             var url = "../control/postcomment.php";
@@ -158,8 +153,33 @@
                 }
             }
 
+            
             xmlhttp.send(request);
         }
+        
+           function addtag(tag) {            
+            
+            var xmlhttp = new XMLHttpRequest();
+
+            var url = "../control/posttag.php";
+            var request = "";
+
+            request += "tag=" + tag;
+            request += "&image=" + "<?php echo $_GET["id"];?>";
+            
+            xmlhttp.open("POST", url, true);
+
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            xmlhttp.onreadystatechange = function() { //Call a function when the state changes.
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    location.reload();
+                }
+            }
+
+            xmlhttp.send(request);
+        }
+
 
         function validatecomment() {
             var cmtinput = document.getElementById("commentinputfield");
@@ -260,7 +280,7 @@
                     document.getElementById("livesearch").style.border = "1px solid #A5ACB2";
                 }
             }
-            xmlhttp.open("GET", "livesearch.php?q=" + input, true);
+            xmlhttp.open("GET", "../control/livesearch.php?q=" + input + "&input=1", true);
             xmlhttp.send();
         }
 
@@ -291,7 +311,7 @@
         
         while($row = $result->fetch_assoc()) {
             echo "<a href='../../index.php?tag=".$row["ID"]."'>";
-            echo "#".$row["NAME"];
+            echo "#".$row["NAME"]." ";
             echo "</a>";
         }
     }
@@ -403,6 +423,41 @@ function checkIfImageExists($id) {
         return false;
     }
 }
+    
+function checkIfTagsMayBeEdited() {
+
+    $servername = "localhost";
+    $db_username = "php_projekt";
+    $db_password = "php_projekt";
+    $dbname = "awd_projekt";
+    
+    $conn = new mysqli($servername, $db_username, $db_password, $dbname);
+    //Check if the connection succeeded, otherwise abort
+    if ($conn->connect_error) {
+        //An error occured, return FALSE for error handling
+        $errorMessage = "We're sorry, there was an error trying to establish a connection to our database. Please try again later.";
+        echo "ERROR";
+        return;
+    }
+    
+    //Get row where username or email exists
+    $sql = "SELECT `IMG_USER_ID` FROM `image` WHERE `ID` = ".$_GET["id"];
+    
+    $result = $conn->query($sql);
+    
+    $row = $result->fetch_assoc();
+
+    if(isset($_SESSION["session_user_ID"]) && !empty($_SESSION["session_user_ID"])) {
+        if($row["IMG_USER_ID"] == $_SESSION["session_user_ID"]){
+            echo "true";
+        } else {
+            echo "false";
+        }
+    } else {
+        echo "false";
+    }
+    
+}
 
 function checkIfImageMayBeViewed($id) {
 
@@ -421,7 +476,7 @@ function checkIfImageMayBeViewed($id) {
     }
     
     //Get row where username or email exists
-    $sql = "SELECT `PRIVATE`FROM `image` WHERE `ID` = ".$id;
+    $sql = "SELECT `PRIVATE`, `IMG_USER_ID` FROM `image` WHERE `ID` = ".$id;
     
     $result = $conn->query($sql);
     
@@ -429,13 +484,15 @@ function checkIfImageMayBeViewed($id) {
     
     if($row["PRIVATE"] == 0) {
         return true;
-    } else if($id == $_SESSION["session_user_ID"]){
-        
-        return true;
+    } else if(isset($_SESSION["session_user_ID"]) && !empty($_SESSION["session_user_ID"])) {
+        if($row["IMG_USER_ID"] == $_SESSION["session_user_ID"]){
+            return true;
+        } else {
+            return false;
+        }
     } else {
         return false;
     }
-    
 }
 
 function getUserForImage() {

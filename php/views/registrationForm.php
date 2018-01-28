@@ -12,7 +12,7 @@
         <img src="../../logos/tmi_logo_text.png" alt="toomanyimages logo" height="36" width="101" id="logo_nav_img" onclick="document.location.href='../../index.php'">
     </nav>
     
-    <section id="formcontainer">
+    <section class="formcontainer">
         <form id="registrationForm" action="../control/registerUser.php" method="post">
             <input class="formtextinput" name="usr_name" type="text" placeholder="Nutzername" oninput="checkForValidUsername(this)" required>Nutzername<br>
             <input class="formtextinput" name="usr_mail" type="email" placeholder="Email" required>E-Mail<br>

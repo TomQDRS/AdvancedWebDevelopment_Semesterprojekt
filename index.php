@@ -16,7 +16,7 @@
 <body>
     <nav>
         <button type="button" class="nav_button" id="upload_nav_button" onclick="document.location.href='php/views/uploadForm.php'" />
-        <button class="nav_button" id="search_nav_button"></button>
+        <button class="nav_button" id="search_nav_button" onclick="showSearchInput()"></button>
         <img src="logos/tmi_logo_text.png" alt="toomanyimages logo" height="36" width="101" id="logo_nav_img" onclick="document.location.href='index.php'">
         <button class="nav_button" id="login_nav_button" onclick="onLoginFormClick()"></button>
         <div class="login_nav_content">
@@ -24,6 +24,7 @@
         </div>
     </nav>
     <section id="main">
+        <div id="imagesearch" style="display:none;"><input id="imgsearchinp" type="text" oninput="reloadImages()"></div>
         <div class="minibar">
             Sortieren nach:
             <select id="orderBy" onchange="reloadImages()">
@@ -63,12 +64,25 @@
         var orderValue = orderBy.options[orderBy.selectedIndex].value;
 
         request += "&order=" + orderValue;
+        
+        var searchinput = document.getElementById("imgsearchinp").value;
+        
+        request += "&search=" + searchinput;
 
         xmlhttp.open("GET", request, true);
         xmlhttp.send();
     }
 
 
+    function showSearchInput() {
+        var x = document.getElementById("imagesearch");
+            if (x.style.display == "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+    }
+    
     function onLoginFormClick() {
 
         var sessionValue = <?php      

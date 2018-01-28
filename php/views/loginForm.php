@@ -11,7 +11,7 @@
         <img src="../../logos/tmi_logo_text.png" alt="toomanyimages logo" height="36" width="101" id="logo_nav_img" onclick="document.location.href='../../index.php'">
     </nav>
 
-    <section id="formcontainer">
+    <section class="formcontainer">
         <form id="loginForm" action="../control/loginUser.php" method="post">
             <input class="formtextinput" name="usr_login" type="text" placeholder="Nutzername" required>Nutzername oder Email<br>
             <input class="formtextinput" name="usr_password" type="password" id="firstPassword" placeholder="Passwort" required>Passwort<br>

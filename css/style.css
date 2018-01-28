@@ -123,8 +123,8 @@ footer {
 }
 
 #main {
-    margin-top: 48px;
     margin-bottom: 45px;
+    margin-top: 48px;
 }
 
 .minibar {
@@ -280,14 +280,24 @@ select {
     margin: auto;
 }
 
-#livesearch {
+#taginputdiv {
+    width: 100%;
+    height: auto;
+    position: relative;
+    display: block;
+    overflow:inherit;
+}
+
+#taginputdiv #livesearch {
 
     display: block;
     position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
+    top: 42px;
+    background-color: #2b2b2b;
+    min-width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    text-align: left;
+    z-index: 2;
 
 }
 
@@ -399,6 +409,7 @@ select {
     outline: none;
 }
 
+
 #image_detail_view {
     max-width: 84%;
     height: auto;
@@ -414,6 +425,8 @@ select {
 }
 
 
+
+
 #image_details {
 
     width: 50%;
@@ -421,13 +434,59 @@ select {
     display: block;
     background-color: #2b2b2b;
     padding: 14px;
-    margin-bottom: 58px;
+    margin-bottom: 16px;
     margin-top: 68px;
-    overflow: auto;
+    overflow: visible;
     text-align: center;
     border-radius: 8px;
 
 }
+
+
+@media only screen and (min-width: 0px) {
+    #image_details {
+
+        width: 75%;
+
+    }
+    
+    .comment {
+        width: 75%;
+    }
+    #commentinput {
+        width: 75%;
+    }
+}
+
+@media only screen and (min-width: 860px) {
+    #image_details {
+
+        width: 50%;
+
+    }
+    .comment {
+        width: 50%;
+    }
+    #commentinput {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 1420px) {
+    #image_details {
+
+        width: 40%;
+
+    }
+    .comment {
+        width: 40%;
+    }
+    #commentinput {
+        width: 40%;
+    }
+}
+
+
 
 #image_details * {
     background-color: transparent;
@@ -447,9 +506,13 @@ select {
 
 #image_detail_meta {
 
+    display: inline-block;
+    width: 100%;
+    height: auto;
     padding-top: 4px;
     border-top: solid 1px white;
     font-size: 10pt;
+    overflow: visible;
 }
 
 #user_for_image {
@@ -461,17 +524,49 @@ select {
 }
 
 .tagarea {
+    width: 100%;
     margin-top: 4px;
     float: left;
 }
 
 #tagdisplay {
+    text-align: left;
     height: auto;
 }
 
+#tagdisplay a {
+        color: white;
+    font-style:italic;
+}
 
+#tag_input_field {
+    
+    color: white;
+    float: left;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid;
+    margin-top: 10px;
+    border-bottom-color: darkgray;
+    font-size: 10pt;
+    display: block;
+    overflow: hidden;
+    resize: none;
+    word-break: normal;
+    box-sizing: border-box;
+    padding: 8px;
+}
 
-#formcontainer {
+#tagbutton {
+    float: right;
+    border: 1px solid #fbb040;
+    font-size: 10pt;
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: white;
+}
+
+.formcontainer {
     background-color: #2b2b2b;
     padding-top: 8px;
     padding-bottom: 16px;
@@ -486,34 +581,45 @@ select {
 }
 
 @media only screen and (min-width: 0px) {
-   #formcontainer {
-       
-           width: 75%;
+    .formcontainer {
+
+        width: 70%;
+
+    }
+    
+    #tag_input_field {
+            width: 70%;
 
     }
 }
 
 @media only screen and (min-width: 860px) {
-       #formcontainer {
-       
-           width: 50%;
+    .formcontainer {
 
+        width: 50%;
+
+    }
+    #tag_input_field {
+            width: 80%;
     }
 }
 
 @media only screen and (min-width: 1420px) {
-       #formcontainer {
-       
-           width: 40%;
+    .formcontainer {
 
+        width: 80%;
+
+    }
+    #tag_input_field {
+        width: 85%;
     }
 }
 
-* #formcontainer {
+* .formcontainer {
     color: darkgray;
 }
 
-#formcontainer * {
+.formcontainer * {
     background-color: transparent;
     color: darkgray;
 }
@@ -523,7 +629,7 @@ input:-webkit-autofill {
     -webkit-text-fill-color: white !important;
 }
 
-#formcontainer .formtextinput {
+.formcontainer .formtextinput {
     color: white;
     text-align: left;
     width: 95%;
@@ -543,7 +649,7 @@ input:-webkit-autofill {
     margin-top: 8px;
 }
 
-#formcontainer .formcheckboxcontainer {
+.formcontainer .formcheckboxcontainer {
     margin-top: 16px;
     font-size: 12pt;
     color: white;
@@ -556,7 +662,7 @@ input:-webkit-autofill {
     width: 16px;
 }
 
-#formcontainer .formsubmit {
+.formcontainer .formsubmit {
     margin-top: 16px;
     margin-bottom: 12px;
     border: 2px solid #fbb040;
@@ -570,7 +676,8 @@ input:-webkit-autofill {
     color: white;
 }
 
-#formcontainer #upload_image_button {
+
+.formcontainer #upload_image_button {
     padding-left: 32px;
     padding-right: 32px;
     padding-top: 16px;
@@ -580,11 +687,62 @@ input:-webkit-autofill {
 }
 
 * a {
-    color:#fbb040;
-    text-decoration:none;
+    color: #fbb040;
+    text-decoration: none;
 }
 
-#formcontainer a {
-    color:#fbb040;
-    text-decoration:none;
+* a:hover {
+    text-decoration: underline;
+}
+
+.formcontainer a {
+    color: #fbb040;
+    text-decoration: none;
+}
+
+#imagesearch {
+    margin-top: 64px;
+    margin-bottom: 8px;
+    height: 48px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background: #2b2b2b;
+    border-radius: 8px;
+}
+
+#imagesearch input {
+    color: white;
+    text-align: left;
+    width: 95%;
+    border: none;
+    background-color: transparent;
+    border-bottom: 1px solid;
+    border-bottom-color: darkgray;
+    font-size: 14pt;
+    display: block;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 8px 16px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4px;
+    margin-bottom:4px;   
+}
+
+#imagesearch input:focus {
+
+    outline: none;
+}
+
+#commentinput #sendcommentbutton {
+    border: 2px solid #fbb040;
+    font-weight: 700;
+    font-size: 12pt;
+    border-radius: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: white;
 }

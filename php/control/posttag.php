@@ -1,7 +1,7 @@
 <?php
 
 if(isset($_POST) & !empty($_POST)) {
-    
+
     $servername = "localhost";
     $username = "php_projekt";
     $password = "php_projekt";
@@ -23,12 +23,13 @@ if(isset($_POST) & !empty($_POST)) {
     }
     
     mysqli_set_charset("utf8");
-    $comment = mysqli_real_escape_string($conn,$_POST['comment']);
-    $userID = $_POST['user'];
+    $tag = $_POST['tag'];
     $imageID = $_POST['image'];
-
+    
     //Create SQL statement from parameters given from the uploadForm.php via POST
-    $sql = "INSERT INTO `comment`(`CONTENT`, `CMT_USER_ID`, `CMT_IMAGE_ID`) VALUES ('".$comment."', ".$userID.", ".$imageID.")";
+    $sql = "INSERT INTO `tag` (`name`) VALUES ('".$tag."') ON DUPLICATE KEY UPDATE `ID`=`ID`;";
+    
+    $sql2 = "INSERT INTO `image_tag` (`IMAGE_ID`, `TAG_ID`) SELECT ".$imageID.", `tag`.`ID` FROM `tag` WHERE `tag`.`NAME` = '".$tag."';";
 
     //Try to query SQL statement via the open connection
     if ($conn->query($sql) === TRUE) {
@@ -41,10 +42,20 @@ if(isset($_POST) & !empty($_POST)) {
         $success = FALSE;
         /*echo "Error: " . $sql . "<br>" . $conn->error;*/
     }
-    //Close connection
-    $conn->close();
-       // header("Location:../../index.php");
     
+    //Try to query SQL statement via the open connection
+    if ($conn->query($sql2) === TRUE) {
+    //The operation was a success, return TRUE
+    $success = TRUE;
+    /*echo "New record created successfully";*/
+    } else {
+        //An error occured, return FALSE for error handling
+        $errorMessage = "We're sorry, there was an error trying to save your input data to our database. Please try again later.";
+        $success = FALSE;
+        /*echo "Error: " . $sql . "<br>" . $conn->error;*/
+    }
+    //Close connection
+    $conn->close();    
 }
 
 ?>

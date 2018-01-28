@@ -131,6 +131,8 @@ footer {
     width: 100%;
     float: left;
     padding-bottom: 14px;
+    padding-left: 14px;
+    box-sizing: border-box;
     padding-top: 14px;
     font-size: 14px;
 }
@@ -217,8 +219,8 @@ footer {
 @media only screen and (min-width: 650px) {
     .imagefield {
         width: 24%;
-        min-height: 250px;
-        max-height: 250px;
+        min-height: 224px;
+        max-height: 224px;
         float: left;
     }
 }
@@ -226,8 +228,8 @@ footer {
 @media only screen and (min-width: 860px) {
     .imagefield {
         width: 16%;
-        min-width: 60px;
-        min-height: 300px;
+        min-height: 250px;
+        max-height: 250px;
         float: left;
     }
 }
